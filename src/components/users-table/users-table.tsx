@@ -138,6 +138,7 @@ export const UsersTable = () => {
             readOnly
             label="Expire date"
             size="md"
+            rightSection={<CloseButton onClick={() => userForm.setFieldValue("expire_date", "")} />}
             {...userForm.getInputProps("expire_date")}
           />
           <Flex justify="space-between">
