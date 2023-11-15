@@ -58,7 +58,7 @@ export const AdminPanel = () => {
           <Select
             label="Status"
             size="md"
-            data={["On update", "Undetected", "Use at own risk"]}
+            data={["On update", "Available", "Use at own risk"]}
             {...infoForm.getInputProps("status")}
           />
           <TextInput label="Cheat version" size="md" {...infoForm.getInputProps("cheat_version")} />
