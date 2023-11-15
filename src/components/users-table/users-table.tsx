@@ -128,7 +128,7 @@ export const UsersTable = () => {
         centered
       >
         <Flex direction="column" gap="xs">
-          <Button color="red" onClick={deleteAccount}>
+          <Button color="red" disabled={userForm.values.admin} onClick={deleteAccount}>
             Delete account
           </Button>
           <Button mt={15} onClick={resetPassword}>

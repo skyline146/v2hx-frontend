@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { produce } from "immer";
+// import { produce } from "immer";
 
 export interface User {
   username: string;
@@ -11,6 +11,7 @@ export interface User {
   last_entry_date: Date;
   warn: number;
   ban: boolean;
+  admin: boolean;
 }
 
 interface UserState {
