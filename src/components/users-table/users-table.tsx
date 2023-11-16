@@ -16,6 +16,7 @@ import { User, useUsersStore } from "../../store";
 import { API_URLS, SUBSCRIPTION } from "../../helpers/enums";
 import api from "../../api";
 import { credentialsModal, notification } from "..";
+import { getSubcription } from "../../helpers/utils";
 
 export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
@@ -102,12 +103,12 @@ export const UsersTable = () => {
         }}
       >
         <Table.Td>{username}</Table.Td>
-        <Table.Td>{expire_date}</Table.Td>
+        <Table.Td>{getSubcription(expire_date)}</Table.Td>
         <Table.Td>{hdd}</Table.Td>
         <Table.Td>{mac_address}</Table.Td>
         <Table.Td>{last_hdd}</Table.Td>
         <Table.Td>{last_mac_address}</Table.Td>
-        <Table.Td>{last_entry_date.toString()}</Table.Td>
+        <Table.Td>{last_entry_date ? new Date(last_entry_date).toLocaleString() : ""}</Table.Td>
         <Table.Td>{warn}</Table.Td>
         <Table.Td>
           <Checkbox readOnly checked={ban} />

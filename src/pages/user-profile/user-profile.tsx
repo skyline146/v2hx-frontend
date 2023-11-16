@@ -1,13 +1,13 @@
 import { Button, Flex, Title, Text, TextInput, Modal, PasswordInput } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
 import api from "../../api";
 import { useUserStore } from "../../store";
 import { notification } from "../../components";
 import { ProtectedRender } from "../../components";
+import { getSubcription } from "../../helpers/utils";
 
 import { API_URLS } from "../../helpers/enums";
 
@@ -107,18 +107,6 @@ export const UserProfile = () => {
     });
   };
 
-  const getSubcription = () => {
-    if (!user.expire_date) {
-      return "No subscription";
-    } else {
-      if (user.expire_date === "Lifetime") {
-        return "Lifetime";
-      }
-
-      return new Date(user.expire_date).toLocaleString() as ReactNode;
-    }
-  };
-
   return (
     <>
       {/* Edit username modal */}
@@ -199,7 +187,7 @@ export const UserProfile = () => {
         </Flex>
 
         <Text size="xl" variant="gradient" gradient={{ from: "blue", to: "cyan", deg: 90 }} mt={20}>
-          Subscription to: {getSubcription()}
+          Subscription to: {getSubcription(user.expire_date)}
         </Text>
       </Flex>
     </>
