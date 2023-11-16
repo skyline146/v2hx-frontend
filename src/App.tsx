@@ -35,6 +35,7 @@ function App() {
           expire_date,
         };
         setUser(userData);
+        if (location.pathname === "/") navigate("/profile");
       })
       .catch(() => navigate("/"))
       .finally(() => setLoading(false));
@@ -44,7 +45,7 @@ function App() {
     <MantineProvider defaultColorScheme="dark">
       <LoadingOverlay
         visible={loading}
-        overlayProps={{ radius: "sm", backgroundOpacity: 1 }}
+        overlayProps={{ radius: "sm", backgroundOpacity: 0.5 }}
         loaderProps={{ color: "blue", type: "dots", size: "xl" }}
       />
       <Notifications />
