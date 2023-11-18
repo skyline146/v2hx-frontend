@@ -16,7 +16,7 @@ import { User, useUsersStore } from "../../store";
 import { API_URLS, SUBSCRIPTION } from "../../helpers/enums";
 import api from "../../api";
 import { credentialsModal, notification } from "..";
-import { getSubcription } from "../../helpers/utils";
+import { getSubcription, addSubscription } from "../../helpers/utils";
 
 export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
@@ -143,13 +143,34 @@ export const UsersTable = () => {
             {...userForm.getInputProps("expire_date")}
           />
           <Flex justify="space-between">
-            <Button onClick={() => userForm.setFieldValue("expire_date", SUBSCRIPTION.DAY)}>
+            <Button
+              onClick={() =>
+                userForm.setFieldValue(
+                  "expire_date",
+                  addSubscription(userForm.values.expire_date, SUBSCRIPTION.DAY)
+                )
+              }
+            >
               Day
             </Button>
-            <Button onClick={() => userForm.setFieldValue("expire_date", SUBSCRIPTION.WEEK)}>
+            <Button
+              onClick={() =>
+                userForm.setFieldValue(
+                  "expire_date",
+                  addSubscription(userForm.values.expire_date, SUBSCRIPTION.WEEK)
+                )
+              }
+            >
               Week
             </Button>
-            <Button onClick={() => userForm.setFieldValue("expire_date", SUBSCRIPTION.MONTH)}>
+            <Button
+              onClick={() =>
+                userForm.setFieldValue(
+                  "expire_date",
+                  addSubscription(userForm.values.expire_date, SUBSCRIPTION.MONTH)
+                )
+              }
+            >
               Month
             </Button>
             <Button onClick={() => userForm.setFieldValue("expire_date", SUBSCRIPTION.LIFETIME)}>

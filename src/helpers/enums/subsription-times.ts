@@ -1,8 +1,8 @@
 const day = 24 * 60 * 60 * 1000;
 
 export const SUBSCRIPTION = {
-  DAY: new Date(Date.now() + day).toISOString(),
-  WEEK: new Date(Date.now() + 7 * day).toISOString(),
-  MONTH: new Date(Date.now() + 30 * day).toISOString(),
+  DAY: new Date(day).getTime(),
+  WEEK: new Date(7 * day).getTime(),
+  MONTH: new Date(30 * day).getTime(),
   LIFETIME: "Lifetime",
 };
