@@ -6,4 +6,5 @@ export const API_URLS = {
   CHANGE_USERNAME: "/users/change-username",
   CHANGE_PASSWORD: "/users/change-password",
   INFO: "/info",
+  ADD_FREE_DAY: "/users/add-free-day",
 };

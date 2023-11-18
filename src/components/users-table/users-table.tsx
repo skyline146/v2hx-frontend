@@ -61,6 +61,14 @@ export const UsersTable = () => {
     closeUserModal();
   };
 
+  const addFreeDay = async () => {
+    await api.patch(API_URLS.ADD_FREE_DAY).then(() => {
+      notification({ type: "Success", message: "Added 1 free day!" });
+    });
+
+    getUsers(1);
+  };
+
   const getUsers = useCallback((page: number, username: string | undefined = undefined) => {
     setLoading(true);
     api
@@ -203,14 +211,19 @@ export const UsersTable = () => {
         </Flex>
       </Modal>
 
-      <TextInput
-        w={400}
-        mb={20}
-        placeholder="Search"
-        value={searchValue}
-        onChange={(e) => setValue(e.currentTarget.value)}
-        rightSection={<CloseButton onClick={() => setValue("")} />}
-      />
+      <Flex>
+        <TextInput
+          w={400}
+          mb={20}
+          placeholder="Search"
+          value={searchValue}
+          onChange={(e) => setValue(e.currentTarget.value)}
+          rightSection={<CloseButton onClick={() => setValue("")} />}
+        />
+        <Button ml={15} onClick={addFreeDay}>
+          Add 1 free day
+        </Button>
+      </Flex>
 
       <Table striped highlightOnHover withColumnBorders>
         <Table.Thead>
