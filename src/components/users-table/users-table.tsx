@@ -47,7 +47,7 @@ export const UsersTable = () => {
   };
 
   const resetPassword = () => {
-    api.get(API_URLS.USERS + `/${userForm.values.username}/reset-password`).then((res) => {
+    api.post(API_URLS.USERS + `/${userForm.values.username}/reset-password`).then((res) => {
       credentialsModal(userForm.values.username, res.data.password);
     });
   };
