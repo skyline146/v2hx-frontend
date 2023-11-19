@@ -96,7 +96,7 @@ export const UserProfile = () => {
 
   //sending data to server
   const sendData = (url: string, data: Partial<IData>) => {
-    api.patch(url, data).then((res) => {
+    api.post(url, data).then((res) => {
       if (res.data === "Username changed!") {
         updateUsername(data.newUsername as string);
       }
