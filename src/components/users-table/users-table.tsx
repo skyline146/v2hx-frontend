@@ -9,7 +9,7 @@ import {
   CloseButton,
   em,
 } from "@mantine/core";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebouncedValue, useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 
@@ -99,48 +99,52 @@ export const UsersTable = () => {
     setPage(1);
   }, [debouncedSearch]);
 
-  const rows = users.map((user) => {
-    const {
-      username,
-      expire_date,
-      hdd,
-      mac_address,
-      last_hdd,
-      last_mac_address,
-      last_entry_date,
-      warn,
-      ban,
-    } = user;
+  const rows = useMemo(
+    () =>
+      users.map((user) => {
+        const {
+          username,
+          expire_date,
+          hdd,
+          mac_address,
+          last_hdd,
+          last_mac_address,
+          last_entry_date,
+          warn,
+          ban,
+        } = user;
 
-    console.log(typeof warn);
+        console.log(typeof warn);
 
-    return (
-      <Table.Tr
-        key={username}
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          userForm.setValues(user);
-          openUserModal();
-        }}
-      >
-        <Table.Td>{username}</Table.Td>
-        <Table.Td>
-          <SubcriptionText expire_date={expire_date} />
-        </Table.Td>
-        <Table.Td>{hdd}</Table.Td>
-        <Table.Td>{mac_address}</Table.Td>
-        <Table.Td bg={last_hdd !== hdd ? "red" : "none"}>{last_hdd}</Table.Td>
-        <Table.Td bg={last_mac_address !== mac_address ? "red" : "none"}>
-          {last_mac_address}
-        </Table.Td>
-        <Table.Td>{last_entry_date ? new Date(last_entry_date).toLocaleString() : ""}</Table.Td>
-        <Table.Td bg={+warn !== 0 ? "yellow" : "none"}>{warn}</Table.Td>
-        <Table.Td>
-          <Checkbox readOnly checked={ban} />
-        </Table.Td>
-      </Table.Tr>
-    );
-  });
+        return (
+          <Table.Tr
+            key={username}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              userForm.setValues(user);
+              openUserModal();
+            }}
+          >
+            <Table.Td>{username}</Table.Td>
+            <Table.Td>
+              <SubcriptionText expire_date={expire_date} />
+            </Table.Td>
+            <Table.Td>{hdd}</Table.Td>
+            <Table.Td>{mac_address}</Table.Td>
+            <Table.Td bg={last_hdd !== hdd ? "red" : "none"}>{last_hdd}</Table.Td>
+            <Table.Td bg={last_mac_address !== mac_address ? "red" : "none"}>
+              {last_mac_address}
+            </Table.Td>
+            <Table.Td>{last_entry_date ? new Date(last_entry_date).toLocaleString() : ""}</Table.Td>
+            <Table.Td bg={+warn !== 0 ? "yellow" : "none"}>{warn}</Table.Td>
+            <Table.Td>
+              <Checkbox readOnly checked={ban} />
+            </Table.Td>
+          </Table.Tr>
+        );
+      }),
+    [users]
+  );
 
   //todo. expire date changing
 
