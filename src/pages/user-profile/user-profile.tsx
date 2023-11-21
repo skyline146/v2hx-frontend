@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import api from "../../api";
 import { useUserStore } from "../../store";
-import { notification } from "../../components";
+import { SubcriptionText, notification } from "../../components";
 import { ProtectedRender } from "../../components";
-import { getSubcription } from "../../helpers/utils";
 
 import { API_URLS } from "../../helpers/enums";
 
@@ -186,8 +185,8 @@ export const UserProfile = () => {
           </Flex>
         </Flex>
 
-        <Text size="xl" variant="gradient" gradient={{ from: "blue", to: "cyan", deg: 90 }} mt={20}>
-          Subscription to: {getSubcription(user.expire_date)}
+        <Text size="xl" c="gray" fw={700} mt={20}>
+          Subscription to: <SubcriptionText expire_date={user.expire_date} />
         </Text>
       </Flex>
     </>

@@ -7,16 +7,17 @@ import {
   Button,
   TextInput,
   CloseButton,
+  em,
 } from "@mantine/core";
 import { useCallback, useEffect, useState } from "react";
-import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
+import { useDebouncedValue, useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 
 import { User, useUsersStore } from "../../store";
 import { API_URLS, SUBSCRIPTION } from "../../helpers/enums";
 import api from "../../api";
-import { credentialsModal, notification } from "..";
-import { getSubcription, addSubscription } from "../../helpers/utils";
+import { SubcriptionText, credentialsModal, notification } from "..";
+import { addSubscription } from "../../helpers/utils";
 
 export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
@@ -32,6 +33,8 @@ export const UsersTable = () => {
   const total = useUsersStore((state) => state.total);
 
   const [openedUserModal, { open: openUserModal, close: closeUserModal }] = useDisclosure(false);
+
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
 
   const userForm = useForm({
     initialValues: {} as User,
@@ -59,6 +62,14 @@ export const UsersTable = () => {
 
     getUsers(1);
     closeUserModal();
+  };
+
+  const createUser = () => {
+    api.post(API_URLS.USERS).then((res) => {
+      const { username, password } = res.data as { username: string; password: string };
+
+      credentialsModal(username, password);
+    });
   };
 
   const addFreeDay = async () => {
@@ -101,6 +112,8 @@ export const UsersTable = () => {
       ban,
     } = user;
 
+    console.log(typeof warn);
+
     return (
       <Table.Tr
         key={username}
@@ -111,13 +124,17 @@ export const UsersTable = () => {
         }}
       >
         <Table.Td>{username}</Table.Td>
-        <Table.Td>{getSubcription(expire_date)}</Table.Td>
+        <Table.Td>
+          <SubcriptionText expire_date={expire_date} />
+        </Table.Td>
         <Table.Td>{hdd}</Table.Td>
         <Table.Td>{mac_address}</Table.Td>
-        <Table.Td>{last_hdd}</Table.Td>
-        <Table.Td>{last_mac_address}</Table.Td>
+        <Table.Td bg={last_hdd !== hdd ? "red" : "none"}>{last_hdd}</Table.Td>
+        <Table.Td bg={last_mac_address !== mac_address ? "red" : "none"}>
+          {last_mac_address}
+        </Table.Td>
         <Table.Td>{last_entry_date ? new Date(last_entry_date).toLocaleString() : ""}</Table.Td>
-        <Table.Td>{warn}</Table.Td>
+        <Table.Td bg={+warn !== 0 ? "yellow" : "none"}>{warn}</Table.Td>
         <Table.Td>
           <Checkbox readOnly checked={ban} />
         </Table.Td>
@@ -199,7 +216,7 @@ export const UsersTable = () => {
             size="md"
             {...userForm.getInputProps("last_entry_date")}
           />
-          <TextInput label="Warn" size="md" {...userForm.getInputProps("warn")} />
+          <TextInput type="number" label="Warn" size="md" {...userForm.getInputProps("warn")} />
           <Checkbox
             label="Ban"
             size="md"
@@ -211,18 +228,25 @@ export const UsersTable = () => {
         </Flex>
       </Modal>
 
-      <Flex>
+      <Flex
+        mb={20}
+        w="100%"
+        direction={isMobile ? "column-reverse" : "row"}
+        justify="space-between"
+      >
         <TextInput
           w={400}
-          mb={20}
           placeholder="Search"
           value={searchValue}
           onChange={(e) => setValue(e.currentTarget.value)}
           rightSection={<CloseButton onClick={() => setValue("")} />}
         />
-        <Button ml={15} onClick={addFreeDay}>
-          Add 1 free day
-        </Button>
+        <Flex mb={isMobile ? 20 : 0}>
+          <Button w={200} mr={20} onClick={createUser}>
+            + Create new account
+          </Button>
+          <Button onClick={addFreeDay}>Add 1 free day</Button>
+        </Flex>
       </Flex>
 
       <Table striped highlightOnHover withColumnBorders>
@@ -241,6 +265,7 @@ export const UsersTable = () => {
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
+
       <Flex w="100%" justify="center">
         <Pagination
           mt={20}

@@ -1,18 +1,14 @@
-import { Box, Button, Flex, TextInput, Title, Select, Modal } from "@mantine/core";
+import { Box, Button, Flex, TextInput, Title, Select, Tabs } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import api from "../../api";
 import { API_URLS } from "../../helpers/enums";
-import { credentialsModal, notification, UsersTable } from "../../components";
-import { useDisclosure } from "@mantine/hooks";
+import { notification, UsersTable } from "../../components";
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
-
-  const [openedChangeInfoModal, { open: openChangeInfoModal, close: closeChangeInfoModal }] =
-    useDisclosure(false);
 
   const infoForm = useForm({
     initialValues: {
@@ -29,16 +25,6 @@ export const AdminPanel = () => {
         message: "Info changed!",
       });
     });
-
-    closeChangeInfoModal();
-  };
-
-  const createUser = () => {
-    api.post(API_URLS.USERS).then((res) => {
-      const { username, password } = res.data as { username: string; password: string };
-
-      credentialsModal(username, password);
-    });
   };
 
   useEffect(() => {
@@ -47,34 +33,8 @@ export const AdminPanel = () => {
 
   return (
     <Box>
-      {/* Edit info modal */}
-      <Modal
-        opened={openedChangeInfoModal}
-        onClose={closeChangeInfoModal}
-        title="Change cheat info"
-        centered
-      >
-        <Flex direction="column" gap="xs">
-          <Select
-            label="Status"
-            size="md"
-            data={["On update", "Available", "Use at own risk"]}
-            {...infoForm.getInputProps("status")}
-          />
-          <TextInput label="Cheat version" size="md" {...infoForm.getInputProps("cheat_version")} />
-          <TextInput
-            label="Loader version"
-            size="md"
-            {...infoForm.getInputProps("loader_version")}
-          />
-          <Button mt={15} onClick={changeInfo}>
-            Save
-          </Button>
-        </Flex>
-      </Modal>
-
-      <Flex justify="center" align="center" mb={10}>
-        <Title size="h1" fw={700} mb={10}>
+      <Flex justify="center" align="center">
+        <Title size="h1" fw={700}>
           Admin Panel
         </Title>
         <Button variant="transparent" ml={15} onClick={() => navigate(-1)}>
@@ -82,15 +42,41 @@ export const AdminPanel = () => {
         </Button>
       </Flex>
 
-      <Flex mt={30} direction="column">
-        <Flex justify="space-between" mb={20}>
-          <Button w={200} onClick={createUser}>
-            + Create new account
-          </Button>
-          <Button onClick={openChangeInfoModal}>Change cheat info</Button>
-        </Flex>
-        <UsersTable />
-      </Flex>
+      <Tabs color="grape" defaultValue="accounts">
+        <Tabs.List justify="center">
+          <Tabs.Tab value="accounts">Accounts</Tabs.Tab>
+          <Tabs.Tab value="info">Cheat info</Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel mt={20} value="accounts">
+          <UsersTable />
+        </Tabs.Panel>
+        <Tabs.Panel mt={20} value="info">
+          <Flex w="100%" justify="center">
+            <Flex w={400} direction="column" gap="xs">
+              <Select
+                label="Status"
+                size="md"
+                data={["On update", "Available", "Use at own risk"]}
+                {...infoForm.getInputProps("status")}
+              />
+              <TextInput
+                label="Cheat version"
+                size="md"
+                {...infoForm.getInputProps("cheat_version")}
+              />
+              <TextInput
+                label="Loader version"
+                size="md"
+                {...infoForm.getInputProps("loader_version")}
+              />
+              <Button mt={15} onClick={changeInfo}>
+                Save
+              </Button>
+            </Flex>
+          </Flex>
+        </Tabs.Panel>
+      </Tabs>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { MantineProvider, LoadingOverlay } from "@mantine/core";
+import { MantineProvider, LoadingOverlay, createTheme } from "@mantine/core";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ModalsProvider } from "@mantine/modals";
@@ -41,8 +41,13 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
+  const theme = createTheme({
+    primaryColor: "violet",
+    focusRing: "never",
+  });
+
   return (
-    <MantineProvider defaultColorScheme="dark">
+    <MantineProvider theme={theme} defaultColorScheme="dark">
       <LoadingOverlay
         visible={loading}
         overlayProps={{ radius: "sm", backgroundOpacity: 0.5 }}
