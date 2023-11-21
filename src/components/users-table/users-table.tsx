@@ -55,21 +55,23 @@ export const UsersTable = () => {
     });
   };
 
-  const deleteAccount = async () => {
+  const deleteUser = async () => {
     await api.delete(API_URLS.USERS + `/${userForm.values.username}`).then(() => {
       notification({ type: "Success", message: "Account was deleted!" });
     });
 
-    getUsers(1);
+    setPage(1);
     closeUserModal();
+    getUsers(1);
   };
 
-  const createUser = () => {
-    api.post(API_URLS.USERS).then((res) => {
+  const createUser = async () => {
+    await api.post(API_URLS.USERS).then((res) => {
       const { username, password } = res.data as { username: string; password: string };
-
       credentialsModal(username, password);
     });
+
+    getUsers(activePage);
   };
 
   const addFreeDay = async () => {
@@ -114,8 +116,6 @@ export const UsersTable = () => {
           ban,
         } = user;
 
-        console.log(typeof warn);
-
         return (
           <Table.Tr
             key={username}
@@ -158,7 +158,7 @@ export const UsersTable = () => {
         centered
       >
         <Flex direction="column" gap="xs">
-          <Button color="red" disabled={userForm.values.admin} onClick={deleteAccount}>
+          <Button color="red" disabled={userForm.values.admin} onClick={deleteUser}>
             Delete account
           </Button>
           <Button mt={15} onClick={resetPassword}>
