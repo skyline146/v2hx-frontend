@@ -1,5 +1,5 @@
 export const addSubscription = (expireDate: string, periodAdded: number) => {
-  if (expireDate === "Lifetime") return;
+  if (expireDate === "Lifetime") return "Lifetime";
 
   const parsedExpireDate = new Date(expireDate);
 
