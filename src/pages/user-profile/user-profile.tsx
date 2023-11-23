@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 import api from "../../api";
 import { useUserStore } from "../../store";
-import { SubcriptionText, notification } from "../../components";
-import { ProtectedRender } from "../../components";
+import { SubcriptionText, notification, ProtectedRender } from "../../components";
+import { useLogout } from "../../hooks";
 
 import { API_URLS } from "../../helpers/enums";
 
@@ -17,23 +17,15 @@ type IData = {
 };
 
 export const UserProfile = () => {
-  const user = useUserStore((state) => state.user);
-  const clearUser = useUserStore((state) => state.clearUser);
-  const updateUsername = useUserStore((state) => state.updateUsername);
+  const { user, updateUsername } = useUserStore((state) => state);
 
+  const logout = useLogout();
   const navigate = useNavigate();
 
   const [openedLoginModal, { open: openEditLoginModal, close: closeEditLoginModal }] =
     useDisclosure(false);
   const [openedPasswordModal, { open: openPasswordModal, close: closePasswordModal }] =
     useDisclosure(false);
-
-  const logout = () => {
-    api.get(API_URLS.LOGOUT).then(() => {
-      clearUser();
-      navigate("/");
-    });
-  };
 
   //edit login form logic
 
@@ -85,8 +77,7 @@ export const UserProfile = () => {
       return;
     }
 
-    const oldPassword = formEditPassword.values.oldPassword;
-    const newPassword = formEditPassword.values.newPassword;
+    const { oldPassword, newPassword } = formEditPassword.values;
 
     sendData(API_URLS.CHANGE_PASSWORD, { password: oldPassword, newPassword });
 

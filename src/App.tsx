@@ -1,15 +1,12 @@
 import { MantineProvider, LoadingOverlay, createTheme } from "@mantine/core";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 
-import api from "./api";
 import { useUserStore } from "./store";
 import { UserProfile, AuthPage, AdminPanel } from "./pages";
 import { ProtectedRoute } from "./components";
-
-import { API_URLS } from "./helpers/enums";
+import { useIsLogged } from "./hooks";
 
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
@@ -17,29 +14,8 @@ import "@mantine/notifications/styles.css";
 import "./App.css";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  const navigate = useNavigate();
-
-  const setUser = useUserStore((state) => state.setUser);
+  const { loading } = useIsLogged();
   const user = useUserStore((state) => state.user);
-
-  useEffect(() => {
-    api
-      .get(API_URLS.IS_LOGGED)
-      .then((res) => {
-        const { username, admin, expire_date } = res.data;
-        const userData = {
-          username,
-          admin,
-          expire_date,
-        };
-        setUser(userData);
-        if (location.pathname === "/") navigate("/profile");
-      })
-      .catch(() => navigate("/"))
-      .finally(() => setLoading(false));
-  }, []);
 
   const theme = createTheme({
     primaryColor: "violet",

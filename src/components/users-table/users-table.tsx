@@ -26,11 +26,7 @@ export const UsersTable = () => {
   const [searchValue, setValue] = useState("");
   const [debouncedSearch] = useDebouncedValue(searchValue, 300);
 
-  const setUsers = useUsersStore((state) => state.setUsers);
-  const setTotal = useUsersStore((state) => state.setTotal);
-  const updateUser = useUsersStore((state) => state.updateUser);
-  const users = useUsersStore((state) => state.users);
-  const total = useUsersStore((state) => state.total);
+  const { setTotal, setUsers, updateUser, users, total } = useUsersStore((state) => state);
 
   const [openedUserModal, { open: openUserModal, close: closeUserModal }] = useDisclosure(false);
 

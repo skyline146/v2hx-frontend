@@ -9,16 +9,12 @@ const api = axios.create({
 api.interceptors.response.use(
   (res) => res,
   (err) => {
+    if (err.response?.status === 401 && location.pathname === "/") return;
+
     notification({
       message: err.response?.data?.message || err.message,
       type: "Error",
     });
-
-    if (err.response?.status === 401) {
-      if (location.pathname !== "/") {
-        location.assign("/");
-      }
-    }
 
     throw err;
   }
