@@ -3,7 +3,6 @@ import { useForm, isNotEmpty } from "@mantine/form";
 import { FC } from "react";
 
 import { useAuth } from "shared/lib/hooks";
-import { LoginData } from "shared/lib/types";
 
 export const AuthForm: FC = () => {
   const { login, loading, toggleLoading } = useAuth();
@@ -20,7 +19,7 @@ export const AuthForm: FC = () => {
     validateInputOnBlur: true,
   });
 
-  const onLogin = async (formData: LoginData) => {
+  const onLogin = async () => {
     loginForm.validate();
 
     if (!loginForm.isValid()) {
@@ -28,19 +27,26 @@ export const AuthForm: FC = () => {
     }
 
     toggleLoading();
-    await login(formData).finally(toggleLoading);
+    await login(loginForm.values).finally(toggleLoading);
   };
 
   return (
-    <Flex direction="column" gap="sm">
-      <TextInput placeholder="Login" size="md" {...loginForm.getInputProps("username")} />
-      <PasswordInput placeholder="Password" size="md" {...loginForm.getInputProps("password")} />
-      <Button loading={loading} size="md" onClick={() => onLogin(loginForm.values)}>
-        Sign In
-      </Button>
-      <Button disabled={loading} variant="transparent" size="md" onClick={() => loginForm.reset()}>
-        Clear
-      </Button>
-    </Flex>
+    <form onSubmit={onLogin}>
+      <Flex direction="column" gap="sm">
+        <TextInput placeholder="Login" size="md" {...loginForm.getInputProps("username")} />
+        <PasswordInput placeholder="Password" size="md" {...loginForm.getInputProps("password")} />
+        <Button type="submit" loading={loading} size="md">
+          Sign In
+        </Button>
+        <Button
+          disabled={loading}
+          variant="transparent"
+          size="md"
+          onClick={() => loginForm.reset()}
+        >
+          Clear
+        </Button>
+      </Flex>
+    </form>
   );
 };
