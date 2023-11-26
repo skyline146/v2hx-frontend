@@ -31,7 +31,12 @@ export const AuthForm: FC = () => {
   };
 
   return (
-    <form onSubmit={onLogin}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onLogin();
+      }}
+    >
       <Flex direction="column" gap="sm">
         <TextInput placeholder="Login" size="md" {...loginForm.getInputProps("username")} />
         <PasswordInput placeholder="Password" size="md" {...loginForm.getInputProps("password")} />
