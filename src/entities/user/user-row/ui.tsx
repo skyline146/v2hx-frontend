@@ -1,6 +1,7 @@
 import { Table, Checkbox } from "@mantine/core";
 import { SubcriptionText } from "entities/subscription-text";
 import { IUserRow } from "shared/lib/types";
+import { truncate } from "shared/lib";
 
 interface IUserRowProps {
   user: IUserRow;
@@ -28,9 +29,9 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
       <Table.Td>
         <SubcriptionText expire_date={expire_date} />
       </Table.Td>
-      <Table.Td>{hdd}</Table.Td>
+      <Table.Td>{truncate(hdd, 20)}</Table.Td>
       <Table.Td>{mac_address}</Table.Td>
-      <Table.Td bg={last_hdd !== hdd ? "red" : "none"}>{last_hdd}</Table.Td>
+      <Table.Td bg={last_hdd !== hdd ? "red" : "none"}>{truncate(last_hdd, 20)}</Table.Td>
       <Table.Td bg={last_mac_address !== mac_address ? "red" : "none"}>{last_mac_address}</Table.Td>
       <Table.Td>{last_entry_date ? new Date(last_entry_date).toLocaleString() : ""}</Table.Td>
       <Table.Td bg={+warn !== 0 ? "yellow" : "none"}>{warn}</Table.Td>

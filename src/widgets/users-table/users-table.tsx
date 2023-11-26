@@ -126,7 +126,7 @@ export const UsersTable = () => {
         </Flex>
       </Flex>
 
-      <Table striped highlightOnHover withColumnBorders>
+      <Table striped highlightOnHover withColumnBorders withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Username</Table.Th>
