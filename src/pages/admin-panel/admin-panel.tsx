@@ -1,35 +1,11 @@
-import { Box, Button, Flex, TextInput, Title, Select, Tabs } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Box, Button, Flex, Title, Tabs } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
-import api from "../../api";
-import { API_URLS } from "../../helpers/enums";
-import { notification, UsersTable } from "../../components";
+import { CheatInfoForm } from "widgets/cheat-info-form";
+import { UsersTable } from "widgets/users-table";
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
-
-  const infoForm = useForm({
-    initialValues: {
-      status: "",
-      cheat_version: "",
-      loader_version: "",
-    },
-  });
-
-  const changeInfo = () => {
-    api.patch(API_URLS.INFO, infoForm.values).then(() => {
-      notification({
-        type: "Success",
-        message: "Info changed!",
-      });
-    });
-  };
-
-  useEffect(() => {
-    api.get(API_URLS.INFO).then((res) => infoForm.setValues(res.data));
-  }, []);
 
   return (
     <Box>
@@ -52,29 +28,7 @@ export const AdminPanel = () => {
           <UsersTable />
         </Tabs.Panel>
         <Tabs.Panel mt={20} value="info">
-          <Flex w="100%" justify="center">
-            <Flex w={400} direction="column" gap="xs">
-              <Select
-                label="Status"
-                size="md"
-                data={["On update", "Available", "Use at own risk"]}
-                {...infoForm.getInputProps("status")}
-              />
-              <TextInput
-                label="Cheat version"
-                size="md"
-                {...infoForm.getInputProps("cheat_version")}
-              />
-              <TextInput
-                label="Loader version"
-                size="md"
-                {...infoForm.getInputProps("loader_version")}
-              />
-              <Button mt={15} onClick={changeInfo}>
-                Save
-              </Button>
-            </Flex>
-          </Flex>
+          <CheatInfoForm />
         </Tabs.Panel>
       </Tabs>
     </Box>

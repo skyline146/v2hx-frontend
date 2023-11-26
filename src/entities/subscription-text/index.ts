@@ -1,0 +1,1 @@
+export { SubcriptionText } from "./ui";
