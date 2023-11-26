@@ -15,7 +15,7 @@ export const AuthPage = () => {
           >
             V2HX
           </Text>
-          Authorization
+          Login
         </Title>
         <AuthForm />
       </Flex>

@@ -41,7 +41,7 @@ export const AuthForm: FC = () => {
         <TextInput placeholder="Login" size="md" {...loginForm.getInputProps("username")} />
         <PasswordInput placeholder="Password" size="md" {...loginForm.getInputProps("password")} />
         <Button type="submit" loading={loading} size="md">
-          Sign In
+          LOGIN
         </Button>
         <Button
           disabled={loading}
