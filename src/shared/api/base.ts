@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_API_URL } from "shared/config";
+import { API_URLS, BASE_API_URL } from "shared/config";
 import { notification } from "shared/lib";
 
 const api = axios.create({
@@ -7,10 +7,35 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const refreshAccessToken = async () => {
+  try {
+    await axios.get(BASE_API_URL + API_URLS.REFRESH, { withCredentials: true });
+    return true; // Токен успешно обновлен
+  } catch (error) {
+    return false; // Обновление токена не удалось
+  }
+};
+
 api.interceptors.response.use(
   (res) => res.data,
-  (err) => {
-    if (err.response?.status === 401 && location.pathname === "/") return;
+  async (err) => {
+    if (err.response.status === 401 && location.pathname === "/") return;
+
+    const originalRequest = err.config;
+
+    // Проверяем, является ли ошибка статусом 401 и не был ли уже попыток обновления токена
+    if (err.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const isTokenRefreshed = await refreshAccessToken();
+      if (isTokenRefreshed) {
+        // Токен обновлен, повторяем исходный запрос
+        return (await axios(originalRequest)).data;
+      } else {
+        // Не удалось обновить токен, перенаправляем на страницу входа
+        window.location.replace("/");
+      }
+    }
 
     notification({
       message: err.response?.data?.message || err.message,

@@ -1,7 +1,7 @@
 import { notifications } from "@mantine/notifications";
 
 interface INotification {
-  message: string;
+  message: string | React.ReactNode;
   type: "Error" | "Success";
 }
 

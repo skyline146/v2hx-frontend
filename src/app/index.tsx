@@ -1,4 +1,5 @@
 import { MantineProvider, LoadingOverlay, createTheme } from "@mantine/core";
+import { useEffect } from "react";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 
@@ -9,7 +10,6 @@ import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 
 import "./index.css";
-import { useEffect } from "react";
 
 function App() {
   const { loading, isLogged } = useAuth();

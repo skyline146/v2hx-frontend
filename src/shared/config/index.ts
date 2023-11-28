@@ -4,6 +4,7 @@ export const API_URLS = {
   LOGIN: "/auth/login-web",
   LOGOUT: "/auth/logout-web",
   IS_LOGGED: "/auth/is-logged",
+  REFRESH: "/auth/refresh",
   USERS: "/users",
   ADD_FREE_DAY: "/users/add-free-day",
   CHANGE_USERNAME: "/users/change-username",
