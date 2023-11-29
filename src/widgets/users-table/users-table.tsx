@@ -1,4 +1,4 @@
-import { Table, Pagination, Flex, Button, TextInput, CloseButton, em } from "@mantine/core";
+import { Table, Pagination, Flex, Button, TextInput, CloseButton } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebouncedValue, useDisclosure, useMediaQuery } from "@mantine/hooks";
 
@@ -22,7 +22,7 @@ export const UsersTable = () => {
 
   const [openedUserModal, { open: openUserModal, close: closeUserModal }] = useDisclosure(false);
 
-  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+  const isMobile = useMediaQuery(`(max-width: 700px)`);
 
   const createUser = async () => {
     await usersApi.create().then((data) => {
@@ -95,54 +95,56 @@ export const UsersTable = () => {
   );
 
   return (
-    <Flex direction="column" align="flex-start">
-      {/* Edit user modal */}
-      <UserDetailsModal
-        user={currentUser}
-        opened={openedUserModal}
-        close={closeUserModal}
-        updateUserData={(data) => updateUserData(data)}
-        deleteUser={(username) => deleteUser(username)}
-      />
-
-      <Flex
-        mb={20}
-        w="100%"
-        direction={isMobile ? "column-reverse" : "row"}
-        justify="space-between"
-      >
-        <TextInput
-          w={400}
-          placeholder="Search"
-          value={searchValue}
-          onChange={(e) => setValue(e.currentTarget.value)}
-          rightSection={<CloseButton onClick={() => setValue("")} />}
+    <>
+      <Flex direction="column" align="flex-start">
+        {/* Edit user modal */}
+        <UserDetailsModal
+          user={currentUser}
+          opened={openedUserModal}
+          close={closeUserModal}
+          updateUserData={(data) => updateUserData(data)}
+          deleteUser={(username) => deleteUser(username)}
         />
-        <Flex mb={isMobile ? 20 : 0}>
-          <Button w={200} mr={20} onClick={createUser}>
-            + Create new account
-          </Button>
-          <Button onClick={addFreeDay}>Add 1 free day</Button>
+
+        <Flex
+          mb={20}
+          w="100%"
+          direction={isMobile ? "column-reverse" : "row"}
+          justify="space-between"
+        >
+          <TextInput
+            w={isMobile ? "100%" : 400}
+            mr={20}
+            placeholder="Search"
+            value={searchValue}
+            onChange={(e) => setValue(e.currentTarget.value)}
+            rightSection={<CloseButton onClick={() => setValue("")} />}
+          />
+          <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
+            <Button onClick={createUser}>+ Create new account</Button>
+            <Button onClick={addFreeDay}>Add 1 free day</Button>
+          </Flex>
         </Flex>
       </Flex>
-
-      <Table striped highlightOnHover withColumnBorders withTableBorder>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Username</Table.Th>
-            <Table.Th>Discord</Table.Th>
-            <Table.Th>Subscription</Table.Th>
-            <Table.Th>HDD</Table.Th>
-            <Table.Th>MAC Address</Table.Th>
-            <Table.Th>Last HDD</Table.Th>
-            <Table.Th>Last MAC Address</Table.Th>
-            <Table.Th>Last Login</Table.Th>
-            <Table.Th>Warn</Table.Th>
-            <Table.Th>Ban</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
-      </Table>
+      <Table.ScrollContainer minWidth="100%">
+        <Table striped highlightOnHover withColumnBorders withTableBorder>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Username</Table.Th>
+              <Table.Th>Discord</Table.Th>
+              <Table.Th>Subscription</Table.Th>
+              <Table.Th>HDD</Table.Th>
+              <Table.Th>MAC Address</Table.Th>
+              <Table.Th>Last HDD</Table.Th>
+              <Table.Th>Last MAC Address</Table.Th>
+              <Table.Th>Last Login</Table.Th>
+              <Table.Th>Warn</Table.Th>
+              <Table.Th>Ban</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+      </Table.ScrollContainer>
 
       <Flex mt={20} mb={20} w="100%" justify="center">
         <Pagination
@@ -152,6 +154,6 @@ export const UsersTable = () => {
           total={Math.ceil(total / 10)}
         />
       </Flex>
-    </Flex>
+    </>
   );
 };

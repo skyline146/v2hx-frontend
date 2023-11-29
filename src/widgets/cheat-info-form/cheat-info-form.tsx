@@ -1,4 +1,4 @@
-import { Flex, Select, TextInput, em } from "@mantine/core";
+import { Flex, Select, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useMediaQuery } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { Form } from "shared/ui";
 export const CheatInfoForm = () => {
   const [loading, setLoading] = useState(false);
 
-  const isMobile = useMediaQuery(`(max-width: ${em(500)})`);
+  const isMobile = useMediaQuery(`(max-width: 500px)`);
 
   const infoForm = useForm({
     initialValues: {
