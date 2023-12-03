@@ -18,10 +18,9 @@ export type Info = {
 };
 
 export interface IUserRow extends User {
-  discord_username: string;
   hdd: string;
-  mac_address: string;
   last_hdd: string;
+  mac_address: string;
   last_mac_address: string;
   warn: number;
   ban: boolean;

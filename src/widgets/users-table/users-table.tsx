@@ -72,7 +72,7 @@ export const UsersTable = () => {
   }, []);
 
   useEffect(() => {
-    getUsers({ page: activePage, search_value: debouncedSearch });
+    getUsers({ page: activePage, search_value: debouncedSearch ? debouncedSearch : undefined });
   }, [activePage, debouncedSearch]);
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const UsersTable = () => {
             setCurrentUser(user);
             openUserModal();
           }}
-          key={user.id}
+          key={user.username}
           user={user}
         />
       )),

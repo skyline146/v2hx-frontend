@@ -1,4 +1,4 @@
-import { Modal, Flex, Button, TextInput, CloseButton, Checkbox } from "@mantine/core";
+import { Modal, Flex, Button, TextInput, NumberInput, CloseButton, Checkbox } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
 
@@ -110,7 +110,7 @@ export const UserDetailsModal = ({
             size="md"
             {...userForm.getInputProps("last_entry_date")}
           />
-          <TextInput type="number" label="Warn" size="md" {...userForm.getInputProps("warn")} />
+          <NumberInput label="Warn" size="md" {...userForm.getInputProps("warn")} />
           <Checkbox
             label="Ban"
             size="md"

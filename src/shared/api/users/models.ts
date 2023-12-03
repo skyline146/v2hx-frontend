@@ -1,7 +1,7 @@
 export interface User {
-  id: string;
   username: string;
+  discord_username: string;
+  admin: boolean;
   expire_date: string;
   last_entry_date: string;
-  admin: boolean;
 }
