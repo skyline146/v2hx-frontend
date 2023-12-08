@@ -123,6 +123,9 @@ export const UsersTable = () => {
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
             <Button onClick={createUser}>+ Create new account</Button>
             <Button onClick={addFreeDay}>Add 1 free day</Button>
+            <a href="/api/info/logs" target="_blank">
+              <Button variant="light">Logs</Button>
+            </a>
           </Flex>
         </Flex>
       </Flex>
