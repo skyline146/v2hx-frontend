@@ -40,7 +40,7 @@ export const CheatInfoForm = () => {
                 message: "Info changed!",
               });
             })
-            .then(() => setLoading(false));
+            .finally(() => setLoading(false));
         }}
       >
         <Select
