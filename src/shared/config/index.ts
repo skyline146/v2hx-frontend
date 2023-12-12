@@ -6,6 +6,7 @@ export const API_URLS = {
   IS_LOGGED: "/auth/is-logged",
   REFRESH: "/auth/refresh",
   USERS: "/users",
+  ONLINE_USERS: "/users/online",
   ADD_FREE_DAY: "/users/add-free-day",
   CHANGE_USERNAME: "/users/change-username",
   CHANGE_PASSWORD: "/users/change-password",

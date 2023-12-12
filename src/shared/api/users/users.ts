@@ -15,6 +15,10 @@ export const get = async (params: GetUsers): Promise<{ users: IUserRow[]; total:
   return api.get(API_URLS.USERS, { params });
 };
 
+export const getOnline = async (): Promise<{ users: IUserRow[]; total: number }> => {
+  return api.get(API_URLS.ONLINE_USERS);
+};
+
 export const update = async (user: IUserRow): Promise<void> => {
   return api.patch(API_URLS.USERS + `/${user.username}`, user);
 };

@@ -1,4 +1,4 @@
-import { Table, Checkbox } from "@mantine/core";
+import { Table, Checkbox, Indicator } from "@mantine/core";
 import { SubcriptionText } from "entities/subscription-text";
 import { IUserRow } from "shared/lib/types";
 import { truncate } from "shared/lib";
@@ -20,11 +20,16 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
     last_entry_date,
     warn,
     ban,
+    online,
   } = user;
 
   return (
     <Table.Tr onClick={onClick} style={{ cursor: "pointer" }}>
-      <Table.Td>{username}</Table.Td>
+      <Table.Td>
+        <Indicator position="top-start" color={online ? "green" : "gray"}>
+          {username}
+        </Indicator>
+      </Table.Td>
       <Table.Td>{discord_username}</Table.Td>
       <Table.Td>
         <SubcriptionText expire_date={expire_date} />

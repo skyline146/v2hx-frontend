@@ -1,9 +1,9 @@
-import { Table, Pagination, Flex, Button, TextInput, CloseButton } from "@mantine/core";
+import { Table, Pagination, Flex, Button, TextInput, CloseButton, Text } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDebouncedValue, useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 import { useUsersStore } from "../../store";
-import { IUserRow } from "shared/lib/types";
+import { IUserRow, IUsersTable } from "shared/lib/types";
 import { UserRow } from "entities/user";
 import { usersApi } from "shared/api";
 import { credentialsModal, notification } from "shared/lib";
@@ -14,6 +14,7 @@ export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState<IUserRow>({} as IUserRow);
+  const [onlineUsers, setOnlineUsers] = useState<IUsersTable>({} as IUsersTable);
 
   const [searchValue, setValue] = useState("");
   const [debouncedSearch] = useDebouncedValue(searchValue, 300);
@@ -79,6 +80,12 @@ export const UsersTable = () => {
     setPage(1);
   }, [debouncedSearch]);
 
+  useEffect(() => {
+    usersApi.getOnline().then((data) => {
+      setOnlineUsers(data);
+    });
+  }, []);
+
   const rows = useMemo(
     () =>
       users.map((user) => (
@@ -120,6 +127,7 @@ export const UsersTable = () => {
             onChange={(e) => setValue(e.currentTarget.value)}
             rightSection={<CloseButton onClick={() => setValue("")} />}
           />
+          <Text c="green">Online: {onlineUsers.total}</Text>
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
             <Button onClick={createUser}>+ Create new account</Button>
             <Button onClick={addFreeDay}>Add 1 free day</Button>

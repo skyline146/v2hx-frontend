@@ -24,4 +24,12 @@ export interface IUserRow extends User {
   last_mac_address: string;
   warn: number;
   ban: boolean;
+  last_entry_date: string;
+  discord_username: string;
+  online: boolean;
+}
+
+export interface IUsersTable {
+  users: IUserRow[];
+  total: number;
 }
