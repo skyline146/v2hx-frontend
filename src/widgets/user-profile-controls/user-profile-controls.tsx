@@ -5,7 +5,7 @@ import { FC, useState } from "react";
 
 import { usersApi } from "shared/api";
 import { useUserStore } from "store";
-import { notification } from "shared/lib";
+import { notification, validateUsername } from "shared/lib";
 import { ModalButton } from "shared/ui/modal-button";
 import { Form } from "shared/ui";
 
@@ -22,10 +22,7 @@ export const UserProfileControls: FC = () => {
       username: "",
     },
     validate: {
-      username: (value) =>
-        !/^[A-Za-z0-9_]{3,30}$/.test(value)
-          ? "Username must be 3 < length < 30, contains only a-z, A-Z, 0-9, _"
-          : null,
+      username: (value) => validateUsername(value),
     },
     validateInputOnChange: true,
   });

@@ -2,6 +2,7 @@ import { Flex, TextInput, PasswordInput, Button } from "@mantine/core";
 import { useForm, isNotEmpty } from "@mantine/form";
 import { FC } from "react";
 
+import { validateUsername } from "shared/lib";
 import { useAuth } from "shared/lib/hooks";
 
 export const AuthForm: FC = () => {
@@ -13,10 +14,10 @@ export const AuthForm: FC = () => {
       password: "",
     },
     validate: {
-      username: isNotEmpty("Login must be provided"),
+      username: (value) => validateUsername(value),
       password: isNotEmpty("Password must be provided"),
     },
-    validateInputOnBlur: true,
+    validateInputOnChange: true,
   });
 
   const onLogin = async () => {
