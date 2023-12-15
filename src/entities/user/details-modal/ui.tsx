@@ -6,7 +6,7 @@ import { usersApi } from "shared/api";
 import { SUBSCRIPTION } from "shared/config";
 import { credentialsModal, addSubscription } from "shared/lib";
 import { IUserRow } from "shared/lib/types";
-import { Form } from "shared/ui";
+import { Form, DiscordButton } from "shared/ui";
 
 interface IUserDetailsModal {
   user: IUserRow;
@@ -53,7 +53,19 @@ export const UserDetailsModal = ({
           >
             Reset password
           </Button>
-          <TextInput label="Discord" size="md" {...userForm.getInputProps("discord_id")} />
+
+          <TextInput
+            label="Discord"
+            size="md"
+            style={{ overflow: "hidden" }}
+            rightSection={
+              <DiscordButton
+                link={`https://discordlookup.com/user/${userForm.values.discord_id}`}
+              />
+            }
+            {...userForm.getInputProps("discord_id")}
+          />
+
           <TextInput
             readOnly
             label="Subscription"
