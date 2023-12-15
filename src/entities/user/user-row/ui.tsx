@@ -11,7 +11,7 @@ interface IUserRowProps {
 export const UserRow = ({ user, onClick }: IUserRowProps) => {
   const {
     username,
-    discord_username,
+    discord_id,
     expire_date,
     hdd,
     mac_address,
@@ -30,7 +30,7 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
           {username}
         </Indicator>
       </Table.Td>
-      <Table.Td>{discord_username}</Table.Td>
+      <Table.Td>{discord_id}</Table.Td>
       <Table.Td>
         <SubcriptionText expire_date={expire_date} />
       </Table.Td>

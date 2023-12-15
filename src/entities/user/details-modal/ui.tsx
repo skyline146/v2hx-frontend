@@ -53,7 +53,7 @@ export const UserDetailsModal = ({
           >
             Reset password
           </Button>
-          <TextInput label="Discord" size="md" {...userForm.getInputProps("discord_username")} />
+          <TextInput label="Discord" size="md" {...userForm.getInputProps("discord_id")} />
           <TextInput
             readOnly
             label="Subscription"
