@@ -9,7 +9,7 @@ const api = axios.create({
 
 const refreshAccessToken = async () => {
   try {
-    await axios.get(BASE_API_URL + API_URLS.REFRESH, { withCredentials: true });
+    await axios.post(BASE_API_URL + API_URLS.REFRESH, { withCredentials: true });
     return true; // Токен успешно обновлен
   } catch (error) {
     return false; // Обновление токена не удалось

@@ -30,15 +30,13 @@ export const useAuth = () => {
   };
 
   const isLogged = async () => {
-    setLoading(true);
     await authApi
       .isLogged()
       .then((user) => {
         setUserData(user);
         if (location.pathname === "/") navigate("/profile");
       })
-      .catch(() => navigate("/"))
-      .finally(() => setLoading(false));
+      .catch(() => navigate("/"));
   };
 
   const logout = async () => {

@@ -12,5 +12,5 @@ export const isLogged = (): Promise<User> => {
 };
 
 export const logout = (): Promise<boolean> => {
-  return api.get(API_URLS.LOGOUT);
+  return api.post(API_URLS.LOGOUT);
 };
