@@ -22,6 +22,7 @@ export const Routing: FC = () => {
         left="50%"
         style={{ zIndex: 99, transform: "translateX(-50%)" }}
         align="center"
+        display={location.pathname === "/admin" ? "none" : "block"}
       >
         <Text size="xl" fw={500} mr={10}>
           Need help?

@@ -7,7 +7,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-const refreshAccessToken = async () => {
+const refreshTokens = async () => {
   try {
     await axios.post(BASE_API_URL + API_URLS.REFRESH, { withCredentials: true });
     return true; // Токен успешно обновлен
@@ -27,8 +27,8 @@ api.interceptors.response.use(
     if (err.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const isTokenRefreshed = await refreshAccessToken();
-      if (isTokenRefreshed) {
+      const isTokensRefreshed = await refreshTokens();
+      if (isTokensRefreshed) {
         // Токен обновлен, повторяем исходный запрос
         return (await axios(originalRequest)).data;
       } else {

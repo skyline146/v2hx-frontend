@@ -90,7 +90,7 @@ export const UserProfileControls: FC = () => {
   return (
     <Flex direction="column" gap="xs">
       <ModalButton
-        title="Change username"
+        title="Change Username"
         opened={openedLoginModal}
         open={openLoginModal}
         close={closeLoginModal}
@@ -105,7 +105,7 @@ export const UserProfileControls: FC = () => {
         </Form>
       </ModalButton>
       <ModalButton
-        title="Change password"
+        title="Change Password"
         opened={openedPassModal}
         open={openPassModal}
         close={closePassModal}

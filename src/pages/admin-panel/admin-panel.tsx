@@ -13,8 +13,8 @@ export const AdminPanel = () => {
         <Title size="h1" fw={700}>
           Admin Panel
         </Title>
-        <Button variant="transparent" ml={15} onClick={() => navigate(-1)}>
-          Go Back
+        <Button variant="default" ml={15} onClick={() => navigate("/profile")}>
+          PROFILE
         </Button>
       </Flex>
 

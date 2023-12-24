@@ -19,16 +19,21 @@ export const UserProfile: FC = () => {
         <Title size="h1" fw={700}>
           Welcome, {username}!
         </Title>
-        <Button variant="transparent" ml={15} onClick={logout}>
-          Logout
+        <Button variant="default" ml={15} onClick={logout}>
+          LOGOUT
         </Button>
       </Flex>
       <Flex justify="center">
         <Flex direction="column" w={300}>
           <UserProfileControls />
+          <a href="/api/loader" target="_blank">
+            <Button w="100%" mt={20} variant="default" size="md">
+              Download V2HX Loader
+            </Button>
+          </a>
           <ProtectedRender admin={admin}>
-            <Button mt={20} variant="gradient" size="md" onClick={() => navigate("/admin")}>
-              Go to admin panel
+            <Button mt={20} variant="default" size="md" onClick={() => navigate("/admin")}>
+              Admin Panel
             </Button>
           </ProtectedRender>
         </Flex>

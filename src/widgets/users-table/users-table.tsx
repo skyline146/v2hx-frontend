@@ -162,7 +162,7 @@ export const UsersTable = () => {
         </Table>
       </Table.ScrollContainer>
 
-      <Flex mt={20} mb={20} w="100%" justify="center">
+      <Flex mt={10} w="100%" justify="center">
         <Pagination
           disabled={loading}
           value={activePage}
