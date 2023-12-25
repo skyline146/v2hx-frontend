@@ -21,6 +21,8 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
     warn,
     ban,
     online,
+    ip,
+    last_ip,
   } = user;
 
   return (
@@ -36,10 +38,12 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
       </Table.Td>
       <Table.Td>{truncate(hdd, 20)}</Table.Td>
       <Table.Td>{mac_address}</Table.Td>
-      <Table.Td bg={last_hdd !== hdd ? "red" : "none"}>{truncate(last_hdd, 20)}</Table.Td>
-      <Table.Td bg={last_mac_address !== mac_address ? "red" : "none"}>{last_mac_address}</Table.Td>
+      <Table.Td c={last_hdd !== hdd ? "red" : "none"}>{truncate(last_hdd, 20)}</Table.Td>
+      <Table.Td c={last_mac_address !== mac_address ? "red" : "none"}>{last_mac_address}</Table.Td>
       <Table.Td>{last_entry_date ? new Date(last_entry_date).toLocaleString() : ""}</Table.Td>
-      <Table.Td bg={+warn !== 0 ? "yellow" : "none"}>{warn}</Table.Td>
+      <Table.Td>{ip}</Table.Td>
+      <Table.Td c={last_ip !== ip ? "#DBD33E" : "none"}>{last_ip}</Table.Td>
+      <Table.Td c={+warn !== 0 ? "#FC8C0C" : "none"}>{warn}</Table.Td>
       <Table.Td>
         <Checkbox readOnly checked={ban} />
       </Table.Td>

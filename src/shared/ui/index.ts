@@ -1,3 +1,3 @@
 export * from "./form";
-export * from "./discord-button";
+export * from "./action-button";
 export * from "./modal-button";

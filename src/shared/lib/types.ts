@@ -25,6 +25,8 @@ export interface IUserRow extends User {
   warn: number;
   ban: boolean;
   last_entry_date: string;
+  ip: string;
+  last_ip: string;
   discord_id: string;
   online: boolean;
 }

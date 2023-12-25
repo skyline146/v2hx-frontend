@@ -26,8 +26,8 @@ export const UserProfile: FC = () => {
       <Flex justify="center">
         <Flex direction="column" w={300}>
           <UserProfileControls />
-          <a href="/api/loader" target="_blank">
-            <Button w="100%" mt={20} variant="default" size="md">
+          <a style={{ marginTop: 20 }} href="/api/loader" target="_blank">
+            <Button w="100%" variant="default" size="md">
               Download V2HX Loader
             </Button>
           </a>

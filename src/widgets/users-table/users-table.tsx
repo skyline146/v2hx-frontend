@@ -129,15 +129,15 @@ export const UsersTable = () => {
           />
           <Text c="green">Online: {onlineUsers.total}</Text>
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
-            <Button onClick={createUser}>+ Create new account</Button>
-            <Button onClick={addFreeDay}>Add 1 free day</Button>
+            <Button onClick={createUser}>+ Create New Account</Button>
+            <Button onClick={addFreeDay}>Add 1 Free Day</Button>
             <a
               href={`/api/info/logs/${new Date().getUTCDate()}-${
                 new Date().getUTCMonth() + 1
               }-${new Date().getUTCFullYear()}`}
               target="_blank"
             >
-              <Button variant="light">Logs</Button>
+              <Button variant="default">Logs</Button>
             </a>
           </Flex>
         </Flex>
@@ -154,6 +154,8 @@ export const UsersTable = () => {
               <Table.Th>Last HDD</Table.Th>
               <Table.Th>Last MAC Address</Table.Th>
               <Table.Th>Last Login</Table.Th>
+              <Table.Th>IP</Table.Th>
+              <Table.Th>Last IP</Table.Th>
               <Table.Th>Warn</Table.Th>
               <Table.Th>Ban</Table.Th>
             </Table.Tr>

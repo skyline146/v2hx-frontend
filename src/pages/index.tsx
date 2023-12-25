@@ -7,7 +7,7 @@ import { AdminPanel } from "./admin-panel";
 import { AuthPage } from "./auth";
 import { UserProfile } from "./user-profile";
 import { useUserStore } from "store";
-import { DiscordButton } from "shared/ui";
+import { ActionButton } from "shared/ui";
 
 export const Routing: FC = () => {
   const user = useUserStore((state) => state.user);
@@ -22,12 +22,12 @@ export const Routing: FC = () => {
         left="50%"
         style={{ zIndex: 99, transform: "translateX(-50%)" }}
         align="center"
-        display={location.pathname === "/admin" ? "none" : "block"}
+        display={location.pathname === "/admin" ? "none" : "flex"}
       >
         <Text size="xl" fw={500} mr={10}>
           Need help?
         </Text>
-        <DiscordButton link="https://discord.gg/8bDf3BdbYd" />
+        <ActionButton link="https://discord.gg/8bDf3BdbYd" img="/discord.svg" />
       </Flex>
       {/* routing for all available pages */}
       <Routes>

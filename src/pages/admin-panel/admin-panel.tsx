@@ -18,13 +18,13 @@ export const AdminPanel = () => {
         </Button>
       </Flex>
 
-      <Tabs color="grape" defaultValue="accounts">
+      <Tabs color="grape" defaultValue="users">
         <Tabs.List justify="center">
-          <Tabs.Tab value="accounts">Accounts</Tabs.Tab>
-          <Tabs.Tab value="info">Cheat info</Tabs.Tab>
+          <Tabs.Tab value="users">Users</Tabs.Tab>
+          <Tabs.Tab value="info">Cheat Info</Tabs.Tab>
         </Tabs.List>
 
-        <Tabs.Panel mt={20} value="accounts">
+        <Tabs.Panel mt={20} value="users">
           <UsersTable />
         </Tabs.Panel>
         <Tabs.Panel mt={20} value="info">

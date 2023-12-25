@@ -49,8 +49,8 @@ export const CheatInfoForm = () => {
           data={["On update", "Available", "Use at own risk"]}
           {...infoForm.getInputProps("status")}
         />
-        <TextInput label="Cheat version" size="md" {...infoForm.getInputProps("cheat_version")} />
-        <TextInput label="Loader version" size="md" {...infoForm.getInputProps("loader_version")} />
+        <TextInput label="Cheat Version" size="md" {...infoForm.getInputProps("cheat_version")} />
+        <TextInput label="Loader Version" size="md" {...infoForm.getInputProps("loader_version")} />
       </Form>
     </Flex>
   );

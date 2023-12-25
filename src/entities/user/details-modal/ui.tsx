@@ -6,7 +6,7 @@ import { usersApi } from "shared/api";
 import { SUBSCRIPTION } from "shared/config";
 import { credentialsModal, addSubscription } from "shared/lib";
 import { IUserRow } from "shared/lib/types";
-import { Form, DiscordButton } from "shared/ui";
+import { Form, ActionButton } from "shared/ui";
 
 interface IUserDetailsModal {
   user: IUserRow;
@@ -59,8 +59,9 @@ export const UserDetailsModal = ({
             size="md"
             style={{ overflow: "hidden" }}
             rightSection={
-              <DiscordButton
+              <ActionButton
                 link={`https://discordlookup.com/user/${userForm.values.discord_id}`}
+                img="/discord.svg"
               />
             }
             {...userForm.getInputProps("discord_id")}
@@ -121,6 +122,30 @@ export const UserDetailsModal = ({
             label="Last Login"
             size="md"
             {...userForm.getInputProps("last_entry_date")}
+          />
+          <TextInput
+            readOnly
+            label="IP"
+            size="md"
+            rightSection={
+              <ActionButton
+                link={`https://whatismyipaddress.com/ip/${userForm.values.ip}`}
+                img="/pin.png"
+              />
+            }
+            {...userForm.getInputProps("ip")}
+          />
+          <TextInput
+            readOnly
+            label="Last IP"
+            size="md"
+            rightSection={
+              <ActionButton
+                link={`https://whatismyipaddress.com/ip/${userForm.values.last_ip}`}
+                img="/pin.png"
+              />
+            }
+            {...userForm.getInputProps("last_ip")}
           />
           <NumberInput label="Warn" size="md" {...userForm.getInputProps("warn")} />
           <Checkbox
