@@ -13,6 +13,12 @@ export const API_URLS = {
   INFO: "/info",
 };
 
+export const pages = {
+  HOME: "/",
+  PROFILE: "/profile",
+  ADMIN: "/admin",
+};
+
 //subscription times
 const day = 24 * 60 * 60 * 1000;
 

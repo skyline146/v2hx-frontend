@@ -5,6 +5,7 @@ interface UserProfileData {
   username: string;
   admin: boolean;
   expire_date: string;
+  is_logged: boolean;
 }
 
 interface UserState {
@@ -21,7 +22,7 @@ type Action = {
 
 // Create your store, which includes both state and (optionally) actions
 export const useUserStore = create<UserState & Action>((set) => ({
-  user: { username: "", admin: false, expire_date: "" },
+  user: { username: "", admin: false, expire_date: "", is_logged: false },
   loading: false,
   setUser: (user: UserProfileData) => set(() => ({ user })),
   clearUser: () => set(() => ({ user: {} as UserProfileData })),

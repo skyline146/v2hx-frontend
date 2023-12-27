@@ -1,21 +1,18 @@
 import { Button, Flex, Title, Text } from "@mantine/core";
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { UserProfileControls } from "widgets/user-profile-controls";
 import { useUserStore } from "store";
 import { SubcriptionText } from "entities/subscription-text";
-import { ProtectedRender } from "entities/session";
 import { useAuth } from "shared/lib/hooks";
 
 export const UserProfile: FC = () => {
-  const { username, admin, expire_date } = useUserStore((state) => state.user);
-  const navigate = useNavigate();
+  const { username, expire_date } = useUserStore((state) => state.user);
   const { logout } = useAuth();
 
   return (
     <Flex direction="column">
-      <Flex justify="center" align="center" mb={50}>
+      <Flex justify="center" align="center" mb={20}>
         <Title size="h1" fw={700}>
           Welcome, {username}!
         </Title>
@@ -31,11 +28,11 @@ export const UserProfile: FC = () => {
               Download V2HX Loader
             </Button>
           </a>
-          <ProtectedRender admin={admin}>
+          {/* <ProtectedRender admin={admin}>
             <Button mt={20} variant="default" size="md" onClick={() => navigate("/admin")}>
               Admin Panel
             </Button>
-          </ProtectedRender>
+          </ProtectedRender> */}
         </Flex>
       </Flex>
 

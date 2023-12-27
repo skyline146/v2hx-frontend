@@ -17,6 +17,7 @@ export const useAuth = () => {
       username,
       admin,
       expire_date,
+      is_logged: true,
     };
 
     setUser(userData);
@@ -30,13 +31,11 @@ export const useAuth = () => {
   };
 
   const isLogged = async () => {
-    await authApi
-      .isLogged()
-      .then((user) => {
-        setUserData(user);
-        if (location.pathname === "/") navigate("/profile");
-      })
-      .catch(() => navigate("/"));
+    await authApi.isLogged().then((user) => {
+      if (!user) return;
+
+      setUserData(user);
+    });
   };
 
   const logout = async () => {
@@ -45,9 +44,11 @@ export const useAuth = () => {
       .logout()
       .then(() => {
         clearUser();
-        navigate("/");
+        navigate("/login");
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const toggleLoading = () => {

@@ -1,19 +1,23 @@
 import { MantineProvider, LoadingOverlay, createTheme } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
+import { useNavigate } from "react-router-dom";
 
-import { Routing } from "pages";
+import Pages from "pages";
 import { useAuth } from "shared/lib/hooks";
 
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
+import "@mantine/carousel/styles.css";
 
 import "./index.css";
 
 function App() {
   const { isLogged } = useAuth();
   const [loading, setLoading] = useState(true);
+  const { current: requestedLocation } = useRef(location.pathname);
+  const navigate = useNavigate();
 
   const theme = createTheme({
     primaryColor: "violet",
@@ -21,7 +25,12 @@ function App() {
   });
 
   useEffect(() => {
-    isLogged().finally(() => setLoading(false));
+    isLogged()
+      .then(() => {
+        if (location.pathname === "/login")
+          navigate(requestedLocation === "/login" ? "/profile" : requestedLocation);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -33,7 +42,7 @@ function App() {
       />
       <Notifications />
       <ModalsProvider>
-        <Routing />
+        <Pages />
       </ModalsProvider>
     </MantineProvider>
   );
