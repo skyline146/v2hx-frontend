@@ -1,7 +1,12 @@
-import { Flex, List, Tabs, Text, Title, Accordion, Image, Checkbox } from "@mantine/core";
+import { Flex, Tabs, Text } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useState } from "react";
 import { useMediaQuery } from "@mantine/hooks";
+import { motion } from "framer-motion";
+
+import { AnimatedPage } from "pages/animated-page";
+import { FeaturesAccordion } from "./features-accordion";
+import { ShowcaseVideo } from "./showcase-video";
 
 const featuresData = [
   {
@@ -205,100 +210,82 @@ export const HomePage = () => {
   const isMobile = useMediaQuery(`(max-width: 850px)`);
 
   return (
-    <Tabs color="grape" defaultValue="features">
-      <Tabs.List grow justify="center" mb={10}>
-        <Tabs.Tab value="features">
-          <Text size="md">Features</Text>
-        </Tabs.Tab>
-        <Tabs.Tab value="video">
-          <Text size="md">Videos</Text>
-        </Tabs.Tab>
-      </Tabs.List>
+    <AnimatedPage>
+      <Tabs keepMounted={false} color="grape" defaultValue="features">
+        <Tabs.List grow justify="center" mb={10}>
+          <Tabs.Tab value="features">
+            <Text size="md">Features</Text>
+          </Tabs.Tab>
+          <Tabs.Tab value="videos">
+            <Text size="md">Videos</Text>
+          </Tabs.Tab>
+        </Tabs.List>
 
-      <Tabs.Panel value="features">
-        <Flex w="100%" style={{ flex: 1 }} direction={isMobile ? "column" : "row"}>
-          <Carousel
-            withIndicators
-            withControls={!isMobile}
-            controlSize={40}
-            loop
-            dragFree={isMobile}
-            className="menu-carousel"
-            style={{ flex: 0.5 }}
-            onSlideChange={(index) => setCurrentSlide(index)}
+        <Tabs.Panel value="features">
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 100 }}
+            transition={{ duration: 0.2 }}
           >
-            <Carousel.Slide>
-              <img src="/menu/assistance.png" />
-            </Carousel.Slide>
-            <Carousel.Slide>
-              <img src="/menu/visuals.png" />
-            </Carousel.Slide>
-            <Carousel.Slide>
-              <img src="/menu/misc.png" />
-            </Carousel.Slide>
-            <Carousel.Slide>
-              <img src="/menu/settings.png" />
-            </Carousel.Slide>
-          </Carousel>
-          <Flex
-            style={{ flex: 0.5, marginLeft: 20, marginTop: isMobile ? 15 : 0 }}
-            direction="column"
-            align="flex-start"
-          >
-            <Flex align="center">
-              <Image w={40} h={40} src={featuresData[currentSlide].icon} />
-              <Title ml={10} mb={10}>
-                {featuresData[currentSlide].title}
-              </Title>
+            <Flex w="100%" style={{ flex: 1 }} direction={isMobile ? "column" : "row"}>
+              <Carousel
+                withIndicators
+                withControls={!isMobile}
+                controlSize={40}
+                loop
+                // speed={12}
+                dragFree={isMobile}
+                className="menu-carousel"
+                style={{ flex: 0.5 }}
+                onSlideChange={(index) => setCurrentSlide(index)}
+              >
+                <Carousel.Slide>
+                  <img src="/menu/assistance.png" />
+                </Carousel.Slide>
+                <Carousel.Slide>
+                  <img src="/menu/visuals.png" />
+                </Carousel.Slide>
+                <Carousel.Slide>
+                  <img src="/menu/misc.png" />
+                </Carousel.Slide>
+                <Carousel.Slide>
+                  <img src="/menu/settings.png" />
+                </Carousel.Slide>
+              </Carousel>
+
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.25 }}
+                style={{ flex: 0.5, marginLeft: 20, marginTop: isMobile ? 15 : 0 }}
+              >
+                <FeaturesAccordion
+                  icon={featuresData[currentSlide].icon}
+                  title={featuresData[currentSlide].title}
+                  columns={featuresData[currentSlide].columns}
+                />
+              </motion.div>
             </Flex>
-            <Accordion w="100%">
-              {featuresData[currentSlide].columns.map((column) => (
-                <Accordion.Item key={column.name} value={column.name}>
-                  <Accordion.Control>
-                    <Title size="h3">{column.name}</Title>
-                  </Accordion.Control>
-                  <Accordion.Panel>
-                    <List
-                      style={{ textAlign: "left" }}
-                      icon={<Checkbox checked readOnly variant="outline" />}
-                    >
-                      {column.features.map((feature) => (
-                        <List.Item key={feature}>{feature}</List.Item>
-                      ))}
-                    </List>
-                  </Accordion.Panel>
-                </Accordion.Item>
-              ))}
-            </Accordion>
-          </Flex>
-        </Flex>
-      </Tabs.Panel>
-      <Tabs.Panel value="video">
-        <Flex direction="column" align="center" w="100%" pos="relative">
-          <Title size={isMobile ? "h2" : "h1"} mb={10}>
-            V2HX Highlights
-          </Title>
-          <iframe
-            width="100%"
-            height="520"
-            src="https://www.youtube.com/embed/G3mvWua21nE?showinfo=0&rel=0"
-            title="| V2HX HACK | craziest sot pvp montage ever clip dump (King of the PC) FullHD |93 fov| |14,9 fps|"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-          <Title size={isMobile ? "h2" : "h1"} mt={10} mb={10}>
-            Cannon Aimbot Showcase
-          </Title>
-          <iframe
-            width="100%"
-            height="520"
-            src="https://www.youtube.com/embed/BmTdfcp9wQE?showinfo=0&rel=0"
-            title="Sea of Thieves Cannon Aimbot Showcase | V2HX HACK"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
-        </Flex>
-      </Tabs.Panel>
-    </Tabs>
+          </motion.div>
+        </Tabs.Panel>
+        <Tabs.Panel value="videos">
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Flex direction="column" align="center" w="100%" pos="relative">
+              <ShowcaseVideo title="V2HX Highlights" videoId="G3mvWua21nE" />
+              <ShowcaseVideo title="Cannon Aimbot Showcase" videoId="BmTdfcp9wQE" />
+              <ShowcaseVideo title="Character Generator Showcase" videoId="15nsy5AwK80" />
+            </Flex>
+          </motion.div>
+        </Tabs.Panel>
+      </Tabs>
+    </AnimatedPage>
   );
 };

@@ -15,7 +15,7 @@ import "./index.css";
 
 function App() {
   const { isLogged } = useAuth();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { current: requestedLocation } = useRef(location.pathname);
   const navigate = useNavigate();
 
@@ -27,8 +27,9 @@ function App() {
   useEffect(() => {
     isLogged()
       .then(() => {
-        if (location.pathname === "/login")
+        if (location.pathname === "/login") {
           navigate(requestedLocation === "/login" ? "/profile" : requestedLocation);
+        }
       })
       .finally(() => setLoading(false));
   }, []);
