@@ -137,7 +137,9 @@ export const UsersTable = () => {
               }-${new Date().getUTCFullYear()}`}
               target="_blank"
             >
-              <Button variant="default">Logs</Button>
+              <Button w="100%" variant="default">
+                Logs
+              </Button>
             </a>
           </Flex>
         </Flex>

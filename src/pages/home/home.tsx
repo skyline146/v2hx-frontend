@@ -1,4 +1,4 @@
-import { Flex, List, Tabs, Text, Title, Accordion, Image } from "@mantine/core";
+import { Flex, List, Tabs, Text, Title, Accordion, Image, Checkbox } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useState } from "react";
 import { useMediaQuery } from "@mantine/hooks";
@@ -211,7 +211,7 @@ export const HomePage = () => {
           <Text size="md">Features</Text>
         </Tabs.Tab>
         <Tabs.Tab value="video">
-          <Text size="md">Video</Text>
+          <Text size="md">Videos</Text>
         </Tabs.Tab>
       </Tabs.List>
 
@@ -219,7 +219,10 @@ export const HomePage = () => {
         <Flex w="100%" style={{ flex: 1 }} direction={isMobile ? "column" : "row"}>
           <Carousel
             withIndicators
+            withControls={!isMobile}
+            controlSize={40}
             loop
+            dragFree={isMobile}
             className="menu-carousel"
             style={{ flex: 0.5 }}
             onSlideChange={(index) => setCurrentSlide(index)}
@@ -237,7 +240,11 @@ export const HomePage = () => {
               <img src="/menu/settings.png" />
             </Carousel.Slide>
           </Carousel>
-          <Flex style={{ flex: 0.5 }} direction="column" align="flex-start" ml={20}>
+          <Flex
+            style={{ flex: 0.5, marginLeft: 20, marginTop: isMobile ? 15 : 0 }}
+            direction="column"
+            align="flex-start"
+          >
             <Flex align="center">
               <Image w={40} h={40} src={featuresData[currentSlide].icon} />
               <Title ml={10} mb={10}>
@@ -251,7 +258,10 @@ export const HomePage = () => {
                     <Title size="h3">{column.name}</Title>
                   </Accordion.Control>
                   <Accordion.Panel>
-                    <List style={{ textAlign: "left" }}>
+                    <List
+                      style={{ textAlign: "left" }}
+                      icon={<Checkbox defaultChecked readOnly variant="outline" />}
+                    >
                       {column.features.map((feature) => (
                         <List.Item key={feature}>{feature}</List.Item>
                       ))}
@@ -264,16 +274,30 @@ export const HomePage = () => {
         </Flex>
       </Tabs.Panel>
       <Tabs.Panel value="video">
-        <div>
+        <Flex direction="column" align="center" w="100%" pos="relative">
+          <Title size={isMobile ? "h2" : "h1"} mb={10}>
+            V2HX Highlights
+          </Title>
           <iframe
-            width="923"
+            width="100%"
             height="520"
             src="https://www.youtube.com/embed/G3mvWua21nE?showinfo=0&rel=0"
             title="| V2HX HACK | craziest sot pvp montage ever clip dump (King of the PC) FullHD |93 fov| |14,9 fps|"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           ></iframe>
-        </div>
+          <Title size={isMobile ? "h2" : "h1"} mt={10} mb={10}>
+            Cannon Aimbot Showcase
+          </Title>
+          <iframe
+            width="100%"
+            height="520"
+            src="https://www.youtube.com/embed/BmTdfcp9wQE?showinfo=0&rel=0"
+            title="Sea of Thieves Cannon Aimbot Showcase | V2HX HACK"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </Flex>
       </Tabs.Panel>
     </Tabs>
   );

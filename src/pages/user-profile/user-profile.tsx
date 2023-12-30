@@ -12,8 +12,8 @@ export const UserProfile: FC = () => {
 
   return (
     <Flex direction="column">
-      <Flex justify="center" align="center" mb={20}>
-        <Title size="h1" fw={700}>
+      <Flex justify="center" align="center" mb={20} wrap="wrap">
+        <Title size="h2" fw={700}>
           Welcome, {username}!
         </Title>
         <Button variant="default" ml={15} onClick={logout}>
@@ -28,11 +28,6 @@ export const UserProfile: FC = () => {
               Download V2HX Loader
             </Button>
           </a>
-          {/* <ProtectedRender admin={admin}>
-            <Button mt={20} variant="default" size="md" onClick={() => navigate("/admin")}>
-              Admin Panel
-            </Button>
-          </ProtectedRender> */}
         </Flex>
       </Flex>
 

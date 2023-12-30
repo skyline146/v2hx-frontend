@@ -28,7 +28,7 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
   return (
     <Table.Tr onClick={onClick} style={{ cursor: "pointer" }}>
       <Table.Td>
-        <Indicator position="top-start" color={online ? "green" : "gray"}>
+        <Indicator zIndex={1} position="top-start" color={online ? "green" : "gray"}>
           {username}
         </Indicator>
       </Table.Td>
