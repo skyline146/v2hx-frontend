@@ -260,7 +260,7 @@ export const HomePage = () => {
                   <Accordion.Panel>
                     <List
                       style={{ textAlign: "left" }}
-                      icon={<Checkbox defaultChecked readOnly variant="outline" />}
+                      icon={<Checkbox checked readOnly variant="outline" />}
                     >
                       {column.features.map((feature) => (
                         <List.Item key={feature}>{feature}</List.Item>
