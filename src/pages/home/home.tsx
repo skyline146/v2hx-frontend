@@ -207,6 +207,7 @@ const featuresData = [
 
 export const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
   const isMobile = useMediaQuery(`(max-width: 850px)`);
 
   return (
@@ -223,10 +224,10 @@ export const HomePage = () => {
 
         <Tabs.Panel value="features">
           <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 100 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            // exit={{ opacity: 0, x: 100 }}
+            transition={{ duration: 0.15 }}
           >
             <Flex w="100%" style={{ flex: 1 }} direction={isMobile ? "column" : "row"}>
               <Carousel
@@ -256,10 +257,10 @@ export const HomePage = () => {
 
               <motion.div
                 key={currentSlide}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.25 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                // exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
                 style={{ flex: 0.5, marginLeft: 20, marginTop: isMobile ? 15 : 0 }}
               >
                 <FeaturesAccordion
@@ -273,10 +274,10 @@ export const HomePage = () => {
         </Tabs.Panel>
         <Tabs.Panel value="videos">
           <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            // exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.15 }}
           >
             <Flex direction="column" align="center" w="100%" pos="relative">
               <ShowcaseVideo title="V2HX Highlights" videoId="G3mvWua21nE" />
