@@ -15,7 +15,7 @@ import "./index.css";
 
 function App() {
   const { isLogged } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { current: requestedLocation } = useRef(location.pathname);
   const navigate = useNavigate();
 
