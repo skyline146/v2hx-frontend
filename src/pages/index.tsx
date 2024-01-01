@@ -21,20 +21,20 @@ const Routing: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [opened, { toggle, close }] = useDisclosure();
+  const [openedNavbar, { toggle: toggleNavbar, close: closeNavbar }] = useDisclosure();
 
   return (
     <AppShell
       h="100%"
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { desktop: true, mobile: !opened } }}
+      navbar={{ width: 300, breakpoint: "sm", collapsed: { desktop: true, mobile: !openedNavbar } }}
       // padding="md"
     >
       <AppShell.Header>
         <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="md" />
+          <Burger opened={openedNavbar} onClick={toggleNavbar} hiddenFrom="sm" size="md" />
           <Group style={{ flex: 1 }} justify="space-between">
-            <NavLink to="/" onClick={close}>
+            <NavLink to="/" onClick={closeNavbar}>
               <Flex align="center">
                 <img src="/logo.png" width={45} height={45} />
                 <Title size="h1" fw={700} ml={5}>
@@ -56,7 +56,7 @@ const Routing: FC = () => {
                   </Text>
                 </NavLink>
               </ProtectedRender>
-              <ProtectedRender allowed={user.is_logged}>
+              <ProtectedRender allowed={user.is_authenticated}>
                 <Button variant="default" onClick={logout}>
                   LOGOUT
                 </Button>
@@ -76,13 +76,13 @@ const Routing: FC = () => {
       <AppShell.Navbar py="md" px={4} zIndex={250}>
         <Flex direction="column" h="100%" align="center" justify="space-around">
           <Box>
-            <NavLink to="/profile" onClick={close}>
+            <NavLink to="/profile" onClick={closeNavbar}>
               <Title size="h2" fw={700}>
                 Profile {user.username ? `(${user.username})` : null}
               </Title>
             </NavLink>
             <ProtectedRender allowed={user.admin}>
-              <NavLink to="/admin" onClick={close}>
+              <NavLink to="/admin" onClick={closeNavbar}>
                 <Title mt={20} size="h2" fw={700}>
                   Admin Panel
                 </Title>
@@ -90,14 +90,14 @@ const Routing: FC = () => {
             </ProtectedRender>
           </Box>
 
-          <ProtectedRender allowed={user.is_logged}>
+          <ProtectedRender allowed={user.is_authenticated}>
             <Button
               w="50%"
               variant="default"
               ml={15}
               onClick={() => {
                 logout();
-                close();
+                closeNavbar();
               }}
             >
               LOGOUT
@@ -122,7 +122,7 @@ const Routing: FC = () => {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute isAuthenticated={user.is_logged}>
+                <ProtectedRoute>
                   <UserProfile />
                 </ProtectedRoute>
               }
@@ -130,7 +130,7 @@ const Routing: FC = () => {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute isAuthenticated={user.is_logged} adminOnly isAdmin={user.admin}>
+                <ProtectedRoute adminOnly isAdmin={user.admin}>
                   <AdminPanel />
                 </ProtectedRoute>
               }

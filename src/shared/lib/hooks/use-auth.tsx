@@ -7,7 +7,7 @@ import { User } from "shared/api/users/models";
 import { useUserStore } from "store";
 
 export const useAuth = () => {
-  const { clearUser, setUser } = useUserStore((state) => state);
+  const { clearUser, setUser, setIsAuthenticating } = useUserStore((state) => state);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ export const useAuth = () => {
       username,
       admin,
       expire_date,
-      is_logged: true,
+      is_authenticated: true,
     };
 
     setUser(userData);
@@ -31,11 +31,14 @@ export const useAuth = () => {
   };
 
   const isLogged = async () => {
-    await authApi.isLogged().then((user) => {
-      if (!user) return;
+    await authApi
+      .isLogged()
+      .then((user) => {
+        if (!user) return;
 
-      setUserData(user);
-    });
+        setUserData(user);
+      })
+      .finally(() => setIsAuthenticating(false));
   };
 
   const logout = async () => {

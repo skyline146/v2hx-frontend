@@ -24,9 +24,7 @@ export const UserDetailsModal = ({
   updateUserData,
   deleteUser,
 }: IUserDetailsModal) => {
-  const userForm = useForm({
-    initialValues: user,
-  });
+  const userForm = useForm<IUserRow>();
 
   useEffect(() => {
     userForm.setValues(user);

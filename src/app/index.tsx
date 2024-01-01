@@ -26,11 +26,7 @@ function App() {
 
   useEffect(() => {
     isLogged()
-      .then(() => {
-        if (location.pathname === "/login") {
-          navigate(requestedLocation === "/login" ? "/profile" : requestedLocation);
-        }
-      })
+      .then(() => navigate(requestedLocation === "/login" ? "/profile" : requestedLocation))
       .finally(() => setLoading(false));
   }, []);
 

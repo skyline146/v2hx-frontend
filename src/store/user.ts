@@ -1,20 +1,22 @@
 import { create } from "zustand";
 import { produce } from "immer";
 
-interface UserProfileData {
+interface User {
   username: string;
   admin: boolean;
   expire_date: string;
-  is_logged: boolean;
+  is_authenticated: boolean;
+  is_authenticating: boolean;
 }
 
 interface UserState {
-  user: UserProfileData;
+  user: User;
   loading: boolean;
 }
 
 type Action = {
-  setUser: (user: UserProfileData) => void;
+  setUser: (user: Omit<User, "is_authenticating">) => void;
+  setIsAuthenticating: (is_authenticating: boolean) => void;
   clearUser: () => void;
   updateUsername: (username: string) => void;
   toggleLoading: () => void;
@@ -22,10 +24,23 @@ type Action = {
 
 // Create your store, which includes both state and (optionally) actions
 export const useUserStore = create<UserState & Action>((set) => ({
-  user: { username: "", admin: false, expire_date: "", is_logged: false },
+  user: {
+    username: "",
+    admin: false,
+    expire_date: "",
+    is_authenticated: false,
+    is_authenticating: true,
+  },
   loading: false,
-  setUser: (user: UserProfileData) => set(() => ({ user })),
-  clearUser: () => set(() => ({ user: {} as UserProfileData })),
+  setUser: (user: Omit<User, "is_authenticating">) =>
+    set(() => ({ user: { ...user, is_authenticating: false } })),
+  setIsAuthenticating: (is_authenticating: boolean) =>
+    set(
+      produce((state: UserState) => {
+        state.user.is_authenticating = is_authenticating;
+      })
+    ),
+  clearUser: () => set(() => ({ user: {} as User })),
   updateUsername: (username: string) =>
     set(
       produce((state: UserState) => {

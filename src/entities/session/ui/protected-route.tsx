@@ -1,25 +1,22 @@
 import { Title, Button } from "@mantine/core";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "store";
 
 interface IProtectedRoute {
-  isAuthenticated: boolean;
   adminOnly?: boolean;
   isAdmin?: boolean;
   children: JSX.Element;
 }
 
-export const ProtectedRoute = ({
-  isAuthenticated,
-  children,
-  adminOnly,
-  isAdmin,
-}: IProtectedRoute) => {
+export const ProtectedRoute = ({ children, adminOnly, isAdmin }: IProtectedRoute) => {
+  const user = useUserStore((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) navigate("/login");
-  }, [isAuthenticated, navigate]);
+    if (user.is_authenticating) return;
+    if (!user.is_authenticated) navigate("/login");
+  }, [user.is_authenticated, user.is_authenticating, navigate]);
 
   if (adminOnly && !isAdmin) {
     return (
@@ -34,5 +31,5 @@ export const ProtectedRoute = ({
     );
   }
 
-  return isAuthenticated ? children : null;
+  return user.is_authenticated ? children : null;
 };

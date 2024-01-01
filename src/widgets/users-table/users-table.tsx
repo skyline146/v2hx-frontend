@@ -6,7 +6,7 @@ import { useUsersStore } from "../../store";
 import { IUserRow, IUsersTable } from "shared/lib/types";
 import { UserRow } from "entities/user";
 import { usersApi } from "shared/api";
-import { credentialsModal, notification } from "shared/lib";
+import { credentialsModal, getLogFileDate, notification } from "shared/lib";
 import { UserDetailsModal } from "entities/user/details-modal";
 import type { GetUsers } from "shared/api/users";
 
@@ -131,12 +131,7 @@ export const UsersTable = () => {
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
             <Button onClick={createUser}>+ Create New Account</Button>
             <Button onClick={addFreeDay}>Add 1 Free Day</Button>
-            <a
-              href={`/api/info/logs/${new Date().getUTCDate()}-${
-                new Date().getUTCMonth() + 1
-              }-${new Date().getUTCFullYear()}`}
-              target="_blank"
-            >
+            <a href={`/api/info/logs/${getLogFileDate()}`} target="_blank">
               <Button w="100%" variant="default">
                 Logs
               </Button>
