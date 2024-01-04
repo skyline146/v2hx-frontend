@@ -12,8 +12,8 @@ How to start playing:
 English: https://telegra.ph/V2HX-How-to-start-playing-12-24
 Russian: https://telegra.ph/V2HX-Kak-nachat-igrat-12-24
 -----------------------------
-If there any problems with crashes, after the crash, open the loader and click on the “send crash log” button so we can solve problems faster.
-If you have any problems/questions, you can create ticket here: https://discord.gg/8bDf3BdbYd`;
+If there will be any problems with crashes, after the crash, open the loader and click on the “send crash log” button so we can solve problems faster.
+If you have any problems/questions - contact us, we will do our best to help you.`;
 };
 
 export default textToCopy;
