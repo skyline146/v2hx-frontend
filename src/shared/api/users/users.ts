@@ -24,7 +24,7 @@ export const update = async (user: IUserRow): Promise<void> => {
 };
 
 export const changeUsername = async (data: Partial<UserNewData>): Promise<string> => {
-  return api.post(API_URLS.USERS.CHANGE_PASSWORD, data);
+  return api.post(API_URLS.USERS.CHANGE_USERNAME, data);
 };
 
 export const changePassword = async (data: Partial<UserNewData>): Promise<string> => {
