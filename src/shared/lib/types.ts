@@ -35,3 +35,22 @@ export interface IUsersTable {
   users: IUserRow[];
   total: number;
 }
+
+export type Player = {
+  xuid: string;
+  gamertag: string;
+  type: number;
+  reason: string;
+};
+
+export type AddPlayer = Omit<Player, "xuid">;
+
+export interface IPlayerRow extends Player {
+  id: string;
+  added_by: string;
+}
+
+export interface IPlayerlist {
+  players: IPlayerRow[];
+  total: number;
+}

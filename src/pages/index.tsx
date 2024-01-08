@@ -26,8 +26,8 @@ const Routing: FC = () => {
   return (
     <AppShell
       h="100%"
-      header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: "sm", collapsed: { desktop: true, mobile: !openedNavbar } }}
+      header={{ height: 55 }}
+      navbar={{ width: 500, breakpoint: "sm", collapsed: { desktop: true, mobile: !openedNavbar } }}
       // padding="md"
     >
       <AppShell.Header>

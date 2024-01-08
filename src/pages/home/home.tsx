@@ -1,4 +1,4 @@
-import { Flex, Tabs, Text } from "@mantine/core";
+import { Flex, Tabs, Title } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useState } from "react";
 import { useMediaQuery } from "@mantine/hooks";
@@ -212,13 +212,13 @@ export const HomePage = () => {
 
   return (
     <AnimatedPage>
-      <Tabs keepMounted={false} color="grape" defaultValue="features">
+      <Tabs keepMounted={false} defaultValue="features">
         <Tabs.List grow justify="center" mb={10}>
           <Tabs.Tab value="features">
-            <Text size="md">Features</Text>
+            <Title size="h1">Features</Title>
           </Tabs.Tab>
-          <Tabs.Tab value="videos">
-            <Text size="md">Videos</Text>
+          <Tabs.Tab color="red" value="videos">
+            <Title size="h1">Videos</Title>
           </Tabs.Tab>
         </Tabs.List>
 

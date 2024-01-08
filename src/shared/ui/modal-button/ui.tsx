@@ -4,6 +4,7 @@ import { FC } from "react";
 interface IModalButtonProps {
   children: JSX.Element;
   title: string;
+  variant?: string;
   opened: boolean;
   open: () => void;
   close: () => void;
@@ -12,6 +13,7 @@ interface IModalButtonProps {
 export const ModalButton: FC<IModalButtonProps> = ({
   title,
   children,
+  variant,
   open,
   close,
   opened,
@@ -22,7 +24,7 @@ export const ModalButton: FC<IModalButtonProps> = ({
         {children}
       </Modal>
 
-      <Button size="md" onClick={open}>
+      <Button variant={variant} size="md" onClick={open}>
         {title}
       </Button>
     </>

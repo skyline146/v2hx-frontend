@@ -7,16 +7,16 @@
 }
 
 iframe {
-  border: 1px solid #9848e8;
+  border: 2px solid black;
   border-radius: 20px;
   max-width: 923px;
 }
 
 .menu-carousel {
-  border: 1px solid #9848e8;
+  border: 1.5px solid #9848e8;
   width: 750px;
   height: 500px;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
 }
 

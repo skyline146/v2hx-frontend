@@ -4,13 +4,13 @@ import { User } from "../users/models";
 import { LoginData } from "shared/lib/types";
 
 export const login = async (data: LoginData): Promise<User> => {
-  return api.post(API_URLS.LOGIN, data);
+  return api.post(API_URLS.AUTH.LOGIN, data);
 };
 
 export const isLogged = (): Promise<User> => {
-  return api.get(API_URLS.IS_LOGGED);
+  return api.get(API_URLS.AUTH.IS_LOGGED);
 };
 
 export const logout = (): Promise<boolean> => {
-  return api.post(API_URLS.LOGOUT);
+  return api.post(API_URLS.AUTH.LOGOUT);
 };

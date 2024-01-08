@@ -1,24 +1,31 @@
-import { Tabs, Text } from "@mantine/core";
+import { Tabs, Title } from "@mantine/core";
 
 import { CheatInfoForm } from "widgets/cheat-info-form";
 import { UsersTable } from "widgets/users-table";
+import { PlayerlistTable } from "widgets/playerlist-table";
 
 export const AdminPanel = () => {
   return (
-    <Tabs color="grape" defaultValue="users">
-      <Tabs.List grow justify="center">
+    <Tabs defaultValue="users">
+      <Tabs.List mb={10} grow justify="center">
         <Tabs.Tab value="users">
-          <Text size="md">Users</Text>
+          <Title size="h3">Users</Title>
+        </Tabs.Tab>
+        <Tabs.Tab value="playerlist">
+          <Title size="h3">Playerlist</Title>
         </Tabs.Tab>
         <Tabs.Tab value="info">
-          <Text size="md">Cheat Info</Text>
+          <Title size="h3">Cheat Info</Title>
         </Tabs.Tab>
       </Tabs.List>
 
-      <Tabs.Panel mt={20} value="users">
+      <Tabs.Panel value="users">
         <UsersTable />
       </Tabs.Panel>
-      <Tabs.Panel mt={20} value="info">
+      <Tabs.Panel value="playerlist">
+        <PlayerlistTable />
+      </Tabs.Panel>
+      <Tabs.Panel value="info">
         <CheatInfoForm />
       </Tabs.Panel>
     </Tabs>
