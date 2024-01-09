@@ -1,5 +1,11 @@
 import { User } from "shared/api/users/models";
 
+export type FeaturesList = {
+  title: string;
+  icon: string;
+  columns: { name: string; features: string[] }[];
+}[];
+
 export type UserNewData = {
   newUsername: string;
   password: string;
