@@ -1,23 +1,21 @@
-import { Table, Pagination, Flex, Button, TextInput, CloseButton, Text } from "@mantine/core";
+import { Table, Pagination, Flex, Button } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDebouncedValue, useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
-import { useUsersStore } from "../../store";
-import { IUserRow, IUsersTable } from "shared/lib/types";
-import { UserRow } from "entities/user";
-import { usersApi } from "shared/api";
-import { credentialsModal, getLogFileDate, notification } from "shared/lib";
 import { UserDetailsModal } from "entities/user/details-modal";
+import { UserRow } from "entities/user";
+import { SearchInput } from "features/search-input";
+import { useUsersStore } from "../../store";
+import { credentialsModal, getLogFileDate, notification } from "shared/lib";
+import { IUserRow } from "shared/lib/types";
 import type { GetUsers } from "shared/api/users";
+import { usersApi } from "shared/api";
 
 export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState<IUserRow>({} as IUserRow);
-  const [onlineUsers, setOnlineUsers] = useState<IUsersTable>({} as IUsersTable);
-
-  const [searchValue, setValue] = useState("");
-  const [debouncedSearch] = useDebouncedValue(searchValue, 300);
+  const [searchValue, setSearchValue] = useState("");
 
   const { setTotal, setUsers, updateUser, users, total } = useUsersStore((state) => state);
 
@@ -61,30 +59,33 @@ export const UsersTable = () => {
     getUsers({ page: 1 });
   };
 
-  const getUsers = useCallback((params: GetUsers) => {
-    setLoading(true);
-    usersApi
-      .get(params)
-      .then((data) => {
-        setUsers(data.users);
-        setTotal(data.total);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  const getUsers = useCallback(
+    (params: GetUsers) => {
+      setLoading(true);
+      usersApi
+        .get(params)
+        .then((data) => {
+          setUsers(data.users);
+          setTotal(data.total);
+        })
+        .finally(() => setLoading(false));
+    },
+    [setTotal, setUsers]
+  );
 
   useEffect(() => {
-    getUsers({ page: activePage, search_value: debouncedSearch ? debouncedSearch : undefined });
-  }, [activePage, debouncedSearch]);
+    getUsers({ page: activePage, search_value: searchValue });
+  }, [activePage, searchValue, getUsers]);
 
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearch]);
+  }, [searchValue]);
 
-  useEffect(() => {
-    usersApi.getOnline().then((data) => {
-      setOnlineUsers(data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   usersApi.getOnline().then((data) => {
+  //     setOnlineUsers(data);
+  //   });
+  // }, []);
 
   const rows = useMemo(
     () =>
@@ -98,7 +99,7 @@ export const UsersTable = () => {
           user={user}
         />
       )),
-    [users]
+    [users, openUserModal]
   );
 
   return (
@@ -119,15 +120,8 @@ export const UsersTable = () => {
           direction={isMobile ? "column-reverse" : "row"}
           justify="space-between"
         >
-          <TextInput
-            w={isMobile ? "100%" : 400}
-            mr={20}
-            placeholder="Search"
-            value={searchValue}
-            onChange={(e) => setValue(e.currentTarget.value)}
-            rightSection={<CloseButton onClick={() => setValue("")} />}
-          />
-          <Text c="green">Online: {onlineUsers.total}</Text>
+          <SearchInput w={isMobile ? "100%" : 400} onChange={(v) => setSearchValue(v)} />
+          {/* <Text c="green">Online: {onlineUsers.total}</Text> */}
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
             <Button onClick={createUser}>+ Create New Account</Button>
             <Button onClick={addFreeDay}>Add 1 Free Day</Button>

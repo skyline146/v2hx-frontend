@@ -1,7 +1,7 @@
-import { TextInput, Select } from "@mantine/core";
+import { TextInput, Select, MantineSize } from "@mantine/core";
 import { useForm, isNotEmpty } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
-import { FC, useState } from "react";
+import { useState } from "react";
 
 import { playerlistApi } from "shared/api";
 import { notification } from "shared/lib";
@@ -9,7 +9,12 @@ import { ModalButton } from "shared/ui/modal-button";
 import { Form } from "shared/ui";
 import { Player } from "shared/lib/types";
 
-export const MarkPlayerButton: FC = () => {
+interface IMarkPlayerButtonProps {
+  size?: MantineSize;
+  w?: string | number;
+}
+
+export const MarkPlayerButton = ({ size = "md", w }: IMarkPlayerButtonProps) => {
   const [loading, setLoading] = useState(false);
 
   const [openedPassModal, { open: openPassModal, close: closePassModal }] = useDisclosure(false);
@@ -52,8 +57,9 @@ export const MarkPlayerButton: FC = () => {
 
   return (
     <ModalButton
-      title="Mark Player (Server Playerlist)"
-      variant="default"
+      title="Mark Player"
+      size={size}
+      w={w}
       opened={openedPassModal}
       open={openPassModal}
       close={closePassModal}

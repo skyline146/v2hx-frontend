@@ -1,6 +1,6 @@
 import api from "../base";
 import { API_URLS } from "shared/config";
-import { AddPlayer, IPlayerlist, IPlayerRow } from "shared/lib/types";
+import { AddPlayer, IPlayerlist, IPlayerRow, Player } from "shared/lib/types";
 
 export const add = async (data: AddPlayer): Promise<string> => {
   return api.post(API_URLS.PLAYERLIST.ADD, data);
@@ -8,6 +8,10 @@ export const add = async (data: AddPlayer): Promise<string> => {
 
 export const get = async (params?: { search_value?: string }): Promise<IPlayerlist> => {
   return api.get(API_URLS.PLAYERLIST.BASE, { params });
+};
+
+export const findOne = async (gamertag: string): Promise<Omit<Player, "xuid">> => {
+  return api.get(API_URLS.PLAYERLIST.BASE + `/${gamertag}`);
 };
 
 export const update = async (player: IPlayerRow): Promise<void> => {

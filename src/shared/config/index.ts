@@ -33,6 +33,12 @@ export enum playerType {
   Toxic = 3,
 }
 
+export enum playerBadge {
+  "violet" = 1,
+  "red" = 2,
+  "green" = 3,
+}
+
 //subscription times
 const day = 24 * 60 * 60 * 1000;
 

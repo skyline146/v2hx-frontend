@@ -1,22 +1,19 @@
-import { Table, Flex, TextInput, CloseButton, Text } from "@mantine/core";
+import { Table, Flex, Text } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 import { usePlayerlistStore } from "store";
 import { PlayerRow, PlayerDetailsModal } from "entities/player";
 import { playerlistApi } from "shared/api";
 import { notification } from "shared/lib";
 import { MarkPlayerButton } from "features/mark-player-button";
+import { SearchInput } from "features/search-input";
 
 import { IPlayerRow } from "shared/lib/types";
 
 export const PlayerlistTable = () => {
-  //   const [activePage, setPage] = useState(1);
   const [currentPlayer, setCurrentPlayer] = useState<IPlayerRow>({} as IPlayerRow);
-  //   const [loading, setLoading] = useState(false);
-
-  const [searchValue, setValue] = useState("");
-  const [debouncedSearch] = useDebouncedValue(searchValue, 300);
+  const [searchValue, setSearchValue] = useState("");
 
   const { setTotal, setPlayers, updatePlayer, players, total } = usePlayerlistStore(
     (state) => state
@@ -24,6 +21,8 @@ export const PlayerlistTable = () => {
 
   const [openedPlayerModal, { open: openPlayerModal, close: closePlayerModal }] =
     useDisclosure(false);
+
+  const isMobile = useMediaQuery(`(max-width: 700px)`);
 
   const updatePlayerData = (data: IPlayerRow) => {
     playerlistApi.update(data).then(() => {
@@ -59,8 +58,8 @@ export const PlayerlistTable = () => {
   //   }, [activePage, debouncedSearch]);
 
   useEffect(() => {
-    getPlayers({ search_value: debouncedSearch ? debouncedSearch : undefined });
-  }, [debouncedSearch, getPlayers]);
+    getPlayers({ search_value: searchValue });
+  }, [searchValue, getPlayers]);
 
   const rows = useMemo(
     () =>
@@ -89,17 +88,20 @@ export const PlayerlistTable = () => {
           deletePlayer={(id) => deletePlayer(id)}
         />
 
-        <Flex mb={20} w="100%" align="center" justify="space-between">
-          <TextInput
-            w={300}
-            mr={20}
-            placeholder="Search"
-            value={searchValue}
-            onChange={(e) => setValue(e.currentTarget.value)}
-            rightSection={<CloseButton onClick={() => setValue("")} />}
-          />
-          <Text>Total: {total}</Text>
-          <MarkPlayerButton />
+        <Flex
+          mb={20}
+          w="100%"
+          direction={isMobile ? "column-reverse" : "row"}
+          justify="space-between"
+          gap="md"
+        >
+          <Flex align="center" direction={isMobile ? "column" : "row"}>
+            <SearchInput w={isMobile ? "100%" : 300} onChange={(v) => setSearchValue(v)} />
+            <Text ml={isMobile ? 0 : 20} size="xl">
+              Total: {total}
+            </Text>
+          </Flex>
+          <MarkPlayerButton w={isMobile ? "100%" : 300} size="sm" />
         </Flex>
       </Flex>
       <Table.ScrollContainer minWidth="100%">

@@ -88,7 +88,7 @@ export const UserProfileControls: FC = () => {
   };
 
   return (
-    <Flex direction="column" gap="xs" mb={20}>
+    <Flex direction="column" gap="xs">
       <ModalButton
         title="Change Username"
         opened={openedLoginModal}

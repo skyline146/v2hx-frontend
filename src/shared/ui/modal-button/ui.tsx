@@ -1,10 +1,13 @@
-import { Modal, Button } from "@mantine/core";
+import { Modal, Button, MantineColor, ButtonVariant } from "@mantine/core";
 import { FC } from "react";
 
 interface IModalButtonProps {
   children: JSX.Element;
   title: string;
-  variant?: string;
+  variant?: ButtonVariant;
+  color?: MantineColor;
+  size?: string;
+  w?: string | number;
   opened: boolean;
   open: () => void;
   close: () => void;
@@ -17,6 +20,9 @@ export const ModalButton: FC<IModalButtonProps> = ({
   open,
   close,
   opened,
+  size,
+  color,
+  w,
 }: IModalButtonProps) => {
   return (
     <>
@@ -24,7 +30,7 @@ export const ModalButton: FC<IModalButtonProps> = ({
         {children}
       </Modal>
 
-      <Button variant={variant} size="md" onClick={open}>
+      <Button w={w} variant={variant} color={color} size={size ? size : "md"} onClick={open}>
         {title}
       </Button>
     </>
