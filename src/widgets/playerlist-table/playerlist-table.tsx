@@ -13,7 +13,7 @@ import { IPlayerRow } from "shared/lib/types";
 
 export const PlayerlistTable = () => {
   const [currentPlayer, setCurrentPlayer] = useState<IPlayerRow>({} as IPlayerRow);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
 
   const { setTotal, setPlayers, updatePlayer, players, total } = usePlayerlistStore(
     (state) => state
@@ -43,12 +43,10 @@ export const PlayerlistTable = () => {
 
   const getPlayers = useCallback(
     (params?: { search_value?: string }) => {
-      // setLoading(true);
       playerlistApi.get(params).then((data) => {
         setPlayers(data.players);
         setTotal(data.total);
       });
-      //   .finally(() => setLoading(false));
     },
     [setPlayers, setTotal]
   );

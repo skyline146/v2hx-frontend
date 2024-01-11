@@ -11,7 +11,7 @@ import { playerType, playerBadge } from "shared/config";
 import { Player } from "shared/lib/types";
 
 export const ServerPlayerlistControls = () => {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [player, setPlayer] = useState<Omit<Player, "xuid">>();
   const [loading, setLoading] = useState(false);
 
