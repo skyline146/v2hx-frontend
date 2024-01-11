@@ -11,7 +11,7 @@ import { playerType, playerBadge } from "shared/config";
 import { Player } from "shared/lib/types";
 
 export const ServerPlayerlistControls = () => {
-  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [searchValue, setSearchValue] = useState("");
   const [player, setPlayer] = useState<Omit<Player, "xuid">>();
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +49,7 @@ export const ServerPlayerlistControls = () => {
             ) : null}
             {player ? (
               <>
-                <Group justify="space-between" mt="md" mb="xs">
+                <Group mt="md">
                   <Text size="xl" fw={500}>
                     {player.gamertag}
                   </Text>

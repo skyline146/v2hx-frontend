@@ -15,7 +15,7 @@ export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState<IUserRow>({} as IUserRow);
-  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [searchValue, setSearchValue] = useState("");
 
   const { setTotal, setUsers, updateUser, users, total } = useUsersStore((state) => state);
 
@@ -74,7 +74,7 @@ export const UsersTable = () => {
   );
 
   useEffect(() => {
-    getUsers({ page: activePage, search_value: searchValue });
+    getUsers({ page: activePage, search_value: searchValue ? searchValue : undefined });
   }, [activePage, searchValue, getUsers]);
 
   useEffect(() => {

@@ -56,7 +56,7 @@ export const PlayerlistTable = () => {
   //   }, [activePage, debouncedSearch]);
 
   useEffect(() => {
-    getPlayers({ search_value: searchValue });
+    getPlayers({ search_value: searchValue ? searchValue : undefined });
   }, [searchValue, getPlayers]);
 
   const rows = useMemo(

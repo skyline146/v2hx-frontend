@@ -106,7 +106,11 @@ export const HomePage = () => {
                     animate={{ opacity: 1, x: 0 }}
                     // exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.32, ease: "easeOut" }}
-                    style={{ flex: 0.5, marginLeft: 20, marginTop: isMobile ? 15 : 0 }}
+                    style={{
+                      flex: 0.5,
+                      marginLeft: isMobile ? 0 : 20,
+                      marginTop: isMobile ? 15 : 0,
+                    }}
                   >
                     <FeaturesAccordion
                       icon={featuresData[currentSlide].icon}
