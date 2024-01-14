@@ -13,7 +13,7 @@ import { IPlayerRow } from "shared/lib/types";
 
 export const PlayerlistTable = () => {
   const [currentPlayer, setCurrentPlayer] = useState<IPlayerRow>({} as IPlayerRow);
-  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const { setTotal, setPlayers, updatePlayer, players, total } = usePlayerlistStore(
     (state) => state
