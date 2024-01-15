@@ -1,7 +1,7 @@
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import { Title, Button, Flex, Text, AppShell, Burger, Group, Box } from "@mantine/core";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
 import { ProtectedRoute, ProtectedRender } from "entities/session";
@@ -13,15 +13,27 @@ import { HomePage } from "./home";
 import { useUserStore } from "store";
 import { ActionButton, NavLink } from "shared/ui";
 import { useAuth } from "shared/lib/hooks";
+import { FeaturesList } from "shared/lib/types";
 
 const Routing: FC = () => {
   const user = useUserStore((state) => state.user);
   const { logout } = useAuth();
+  const [featuresData, setFeaturesData] = useState<FeaturesList | null>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const [openedNavbar, { toggle: toggleNavbar, close: closeNavbar }] = useDisclosure();
+
+  useEffect(() => {
+    async function fetchFeatures() {
+      const data = await fetch("/features.json").then((res) => res.json());
+
+      setFeaturesData(data);
+    }
+
+    fetchFeatures();
+  }, []);
 
   return (
     <AppShell
@@ -117,7 +129,7 @@ const Routing: FC = () => {
         {/* routing for all available pages */}
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage featuresData={featuresData} />} />
             <Route path="/login" element={<AuthPage />} />
             <Route
               path="/profile"

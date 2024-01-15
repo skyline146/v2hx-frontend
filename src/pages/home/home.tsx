@@ -1,31 +1,23 @@
 import { Box, Button, Flex, Tabs, Title } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMediaQuery } from "@mantine/hooks";
 import { motion } from "framer-motion";
 
 import { AnimatedPage } from "pages/animated-page";
 import { FeaturesAccordion } from "./features-accordion";
 import { ShowcaseVideo } from "./showcase-video";
-
 import { FeaturesList } from "shared/lib/types";
 
-export const HomePage = () => {
+interface IHomePageProps {
+  featuresData: FeaturesList | null;
+}
+
+export const HomePage = ({ featuresData }: IHomePageProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [featuresData, setFeaturesData] = useState<FeaturesList | null>(null);
   const [activeTab, setActiveTab] = useState<string | null>("features");
 
   const isMobile = useMediaQuery(`(max-width: 850px)`);
-
-  useEffect(() => {
-    async function fetchFeatures() {
-      const data = await fetch("/features.json").then((res) => res.json());
-
-      setFeaturesData(data);
-    }
-
-    fetchFeatures();
-  }, []);
 
   return (
     <>
