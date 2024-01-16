@@ -1,4 +1,4 @@
-import { Table, Flex, Text } from "@mantine/core";
+import { Table, Flex, Text, Pagination } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
@@ -10,10 +10,13 @@ import { MarkPlayerButton } from "features/mark-player-button";
 import { SearchInput } from "features/search-input";
 
 import { IPlayerRow } from "shared/lib/types";
+import { GetPlayerlist } from "shared/api/playerlist";
 
 export const PlayerlistTable = () => {
-  const [currentPlayer, setCurrentPlayer] = useState<IPlayerRow>({} as IPlayerRow);
+  const [selectedPlayer, setSelectedPlayer] = useState<IPlayerRow>({} as IPlayerRow);
+  const [activePage, setPage] = useState(1);
   const [searchValue, setSearchValue] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const { setTotal, setPlayers, updatePlayer, players, total } = usePlayerlistStore(
     (state) => state
@@ -38,33 +41,38 @@ export const PlayerlistTable = () => {
       closePlayerModal();
     });
 
-    getPlayers();
+    setPage(1);
+    getPlayers({ page: 1 });
   };
 
   const getPlayers = useCallback(
-    (params?: { search_value?: string }) => {
-      playerlistApi.get(params).then((data) => {
-        setPlayers(data.players);
-        setTotal(data.total);
-      });
+    (params: GetPlayerlist) => {
+      setLoading(true);
+      playerlistApi
+        .get(params)
+        .then((data) => {
+          setPlayers(data.players);
+          setTotal(data.total);
+        })
+        .finally(() => setLoading(false));
     },
     [setPlayers, setTotal]
   );
 
-  //   useEffect(() => {
-  //     getUsers({ page: activePage, search_value: debouncedSearch ? debouncedSearch : undefined });
-  //   }, [activePage, debouncedSearch]);
+  useEffect(() => {
+    getPlayers({ page: activePage, search_value: searchValue ? searchValue : undefined });
+  }, [activePage, searchValue, getPlayers]);
 
   useEffect(() => {
-    getPlayers({ search_value: searchValue ? searchValue : undefined });
-  }, [searchValue, getPlayers]);
+    setPage(1);
+  }, [searchValue]);
 
   const rows = useMemo(
     () =>
       players.map((player) => (
         <PlayerRow
           onClick={() => {
-            setCurrentPlayer(player);
+            setSelectedPlayer(player);
             openPlayerModal();
           }}
           key={player.id}
@@ -79,7 +87,7 @@ export const PlayerlistTable = () => {
       <Flex direction="column" align="flex-start">
         {/* Edit user modal */}
         <PlayerDetailsModal
-          player={currentPlayer}
+          player={selectedPlayer}
           opened={openedPlayerModal}
           close={closePlayerModal}
           updatePlayer={(data) => updatePlayerData(data)}
@@ -117,14 +125,14 @@ export const PlayerlistTable = () => {
         </Table>
       </Table.ScrollContainer>
 
-      {/* <Flex mt={10} w="100%" justify="center">
+      <Flex mt={10} w="100%" justify="center">
         <Pagination
           disabled={loading}
           value={activePage}
           onChange={setPage}
           total={Math.ceil(total / 10)}
         />
-      </Flex> */}
+      </Flex>
     </>
   );
 };

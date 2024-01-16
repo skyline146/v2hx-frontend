@@ -32,7 +32,7 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
           {username}
         </Indicator>
       </Table.Td>
-      <Table.Td>{discord_id}</Table.Td>
+      <Table.Td>{truncate(discord_id, 10)}</Table.Td>
       <Table.Td>
         <SubcriptionText expire_date={expire_date} />
       </Table.Td>
@@ -43,8 +43,8 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
         {last_mac_address}
       </Table.Td>
       <Table.Td>{last_entry_date ? new Date(last_entry_date).toLocaleString() : ""}</Table.Td>
-      <Table.Td>{ip}</Table.Td>
-      <Table.Td c={last_ip !== ip ? "#DBD33E" : undefined}>{last_ip}</Table.Td>
+      <Table.Td>{truncate(ip, 15)}</Table.Td>
+      <Table.Td c={last_ip !== ip ? "#DBD33E" : undefined}>{truncate(last_ip, 15)}</Table.Td>
       <Table.Td c={warn !== 0 ? "#FC8C0C" : undefined}>{warn}</Table.Td>
       <Table.Td>
         <Checkbox readOnly checked={ban} />

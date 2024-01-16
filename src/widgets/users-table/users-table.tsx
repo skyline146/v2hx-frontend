@@ -1,4 +1,4 @@
-import { Table, Pagination, Flex, Button } from "@mantine/core";
+import { Table, Pagination, Flex, Button, Text } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
@@ -7,14 +7,15 @@ import { UserRow } from "entities/user";
 import { SearchInput } from "features/search-input";
 import { useUsersStore } from "../../store";
 import { credentialsModal, getLogFileDate, notification } from "shared/lib";
+import { usersApi } from "shared/api";
+
 import { IUserRow } from "shared/lib/types";
 import type { GetUsers } from "shared/api/users";
-import { usersApi } from "shared/api";
 
 export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState<IUserRow>({} as IUserRow);
+  const [selectedUser, setSelectedUser] = useState<IUserRow>({} as IUserRow);
   const [searchValue, setSearchValue] = useState("");
 
   const { setTotal, setUsers, updateUser, users, total } = useUsersStore((state) => state);
@@ -55,8 +56,8 @@ export const UsersTable = () => {
       notification({ type: "Success", message: "Added 1 free day!" });
     });
 
-    setPage(1);
-    getUsers({ page: 1 });
+    // setPage(1);
+    getUsers({ page: activePage });
   };
 
   const getUsers = useCallback(
@@ -92,7 +93,7 @@ export const UsersTable = () => {
       users.map((user) => (
         <UserRow
           onClick={() => {
-            setCurrentUser(user);
+            setSelectedUser(user);
             openUserModal();
           }}
           key={user.username}
@@ -107,7 +108,7 @@ export const UsersTable = () => {
       <Flex direction="column" align="flex-start">
         {/* Edit user modal */}
         <UserDetailsModal
-          user={currentUser}
+          user={selectedUser}
           opened={openedUserModal}
           close={closeUserModal}
           updateUserData={(data) => updateUserData(data)}
@@ -120,7 +121,12 @@ export const UsersTable = () => {
           direction={isMobile ? "column-reverse" : "row"}
           justify="space-between"
         >
-          <SearchInput w={isMobile ? "100%" : 400} onChange={(v) => setSearchValue(v)} />
+          <Flex align="center" direction={isMobile ? "column" : "row"}>
+            <SearchInput w={isMobile ? "100%" : 400} onChange={(v) => setSearchValue(v)} />
+            <Text ml={isMobile ? 0 : 20} size="xl">
+              Total: {total}
+            </Text>
+          </Flex>
           {/* <Text c="green">Online: {onlineUsers.total}</Text> */}
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
             <Button onClick={createUser}>+ Create New Account</Button>
@@ -138,7 +144,7 @@ export const UsersTable = () => {
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Username</Table.Th>
-              <Table.Th>Discord</Table.Th>
+              <Table.Th>Discord ID</Table.Th>
               <Table.Th>Subscription</Table.Th>
               <Table.Th>HDD</Table.Th>
               <Table.Th>MAC Address</Table.Th>
