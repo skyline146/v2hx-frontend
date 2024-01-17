@@ -163,6 +163,7 @@ export const UsersTable = () => {
 
       <Flex mt={10} w="100%" justify="center">
         <Pagination
+          siblings={0}
           disabled={loading}
           value={activePage}
           onChange={setPage}
