@@ -1,4 +1,4 @@
-import { Flex, Box, Button } from "@mantine/core";
+import { Flex, Box, Button, MantineSize } from "@mantine/core";
 import { FC } from "react";
 
 interface IFormProps {
@@ -7,7 +7,7 @@ interface IFormProps {
   loading?: boolean;
   closeModal?: () => void;
   w?: number | string;
-  gap?: string;
+  gap?: MantineSize | number;
 }
 
 export const Form: FC<IFormProps> = ({ children, onSave, loading, w, gap }: IFormProps) => {
@@ -22,7 +22,7 @@ export const Form: FC<IFormProps> = ({ children, onSave, loading, w, gap }: IFor
       <Flex w={w} gap={gap} direction="column">
         {children}
         <Box mt={15} w={150} style={{ alignSelf: "center" }}>
-          <Button loading={loading} type="submit" w="100%">
+          <Button loading={loading} size="md" type="submit" w="100%">
             Save
           </Button>
         </Box>

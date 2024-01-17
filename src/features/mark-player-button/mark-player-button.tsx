@@ -1,4 +1,4 @@
-import { TextInput, Select, MantineSize } from "@mantine/core";
+import { TextInput, Select, MantineSize, Text } from "@mantine/core";
 import { useForm, isNotEmpty } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
@@ -64,19 +64,20 @@ export const MarkPlayerButton = ({ size = "md", w }: IMarkPlayerButtonProps) => 
       open={openPassModal}
       close={closePassModal}
     >
-      <Form onSave={addPlayer} loading={loading}>
-        <TextInput label="Gamertag" size="md" {...playerForm.getInputProps("gamertag")} />
+      <Form onSave={addPlayer} loading={loading} gap="xs">
+        <TextInput label="Gamertag*:" size="md" {...playerForm.getInputProps("gamertag")} />
         <Select
-          label="Type"
+          label="Type:"
           size="md"
           data={[
-            { label: "Streamer", value: "1" },
-            { label: "Cheater", value: "2" },
-            { label: "Toxic", value: "3" },
+            { label: "Streamer🟣", value: "1" },
+            { label: "Cheater🔴", value: "2" },
+            { label: "Toxic🟢", value: "3" },
           ]}
           {...playerForm.getInputProps("type")}
         />
-        <TextInput label="Reason/Link" size="md" {...playerForm.getInputProps("reason")} />
+        <TextInput size="md" label="Reason/Link:" {...playerForm.getInputProps("reason")} />
+        <Text>* Validating by Xbox</Text>
       </Form>
     </ModalButton>
   );

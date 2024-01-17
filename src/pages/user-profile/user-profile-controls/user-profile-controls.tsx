@@ -98,6 +98,7 @@ export const UserProfileControls: FC = () => {
         <Form onSave={sendNewLogin} loading={loading}>
           <TextInput
             w="100%"
+            size="md"
             label="New username:"
             data-autofocus
             {...formEditLogin.getInputProps("username")}
@@ -110,20 +111,23 @@ export const UserProfileControls: FC = () => {
         open={openPassModal}
         close={closePassModal}
       >
-        <Form onSave={sendNewPassword} loading={loading}>
+        <Form onSave={sendNewPassword} loading={loading} gap="xs">
           <PasswordInput
             w="100%"
+            size="md"
             label="Old password:"
             data-autofocus
             {...formEditPassword.getInputProps("oldPassword")}
           />
           <PasswordInput
             w="100%"
+            size="md"
             label="New password:"
             {...formEditPassword.getInputProps("newPassword")}
           />
           <PasswordInput
             w="100%"
+            size="md"
             label="Confirm new password:"
             {...formEditPassword.getInputProps("confirmNewPassword")}
           />

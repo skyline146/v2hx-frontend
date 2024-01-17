@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { MarkPlayerButton } from "features/mark-player-button";
 import { SearchInput } from "features/search-input";
-import { ModalButton } from "shared/ui";
+import { ActionButton, ModalButton } from "shared/ui";
 import { playerlistApi } from "shared/api";
 import { playerType, playerBadge } from "shared/config";
 
@@ -18,14 +18,13 @@ export const ServerPlayerlistControls = () => {
   const [openedSearch, { open: openSearchModal, close: closeSearchModal }] = useDisclosure(false);
 
   useEffect(() => {
+    setPlayer(undefined);
     if (searchValue) {
       setLoading(true);
       playerlistApi
         .findOne(searchValue)
         .then((data) => setPlayer(data))
         .finally(() => setLoading(false));
-    } else {
-      setPlayer(undefined);
     }
   }, [searchValue]);
 
@@ -46,14 +45,20 @@ export const ServerPlayerlistControls = () => {
               <Flex justify="center">
                 <Loader mt={20} />
               </Flex>
-            ) : null}
-            {player ? (
+            ) : player ? (
               <>
                 <Group mt="md">
                   <Text size="xl" fw={500}>
                     {player.gamertag}
                   </Text>
                   <Badge color={playerBadge[player.type]}>{playerType[player.type]}</Badge>
+                  <ActionButton
+                    link={`https://account.xbox.com/en-us/profile?gamertag=${encodeURIComponent(
+                      player.gamertag
+                    )}`}
+                    bg="var(--mantine-color-green-filled)"
+                    img="/xbox.svg"
+                  />
                 </Group>
 
                 <Text>{player.reason}</Text>

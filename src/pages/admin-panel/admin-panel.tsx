@@ -7,7 +7,7 @@ import { PlayerlistTable } from "widgets/playerlist-table";
 export const AdminPanel = () => {
   return (
     <Tabs defaultValue="users">
-      <Tabs.List mb={10} grow justify="center">
+      <Tabs.List mt={-20} mb={10} grow justify="center">
         <Tabs.Tab value="users">
           <Title size="h3">Users</Title>
         </Tabs.Tab>
