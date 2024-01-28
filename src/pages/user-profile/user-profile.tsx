@@ -1,6 +1,23 @@
-import { Button, Flex, Title, Text, Tabs, Box, Card, Divider } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  Title,
+  Text,
+  Tabs,
+  Box,
+  Card,
+  Divider,
+  HoverCard,
+  List,
+} from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { IconAddressBook, IconServerCog, IconGift, IconDownload } from "@tabler/icons-react";
+import {
+  IconAddressBook,
+  IconServerCog,
+  IconGift,
+  IconDownload,
+  IconInfoCircle,
+} from "@tabler/icons-react";
 
 import { AnimatedPage } from "pages/animated-page";
 import { useUserStore } from "store";
@@ -62,8 +79,39 @@ export const UserProfile = () => {
                       <Tabs.Tab value="playerlist" leftSection={<IconServerCog />}>
                         <Text size="lg">Server Playerlist</Text>
                       </Tabs.Tab>
-                      <Tabs.Tab value="invites" leftSection={<IconGift />}>
-                        <Text size="lg">Invites</Text>
+                      <Tabs.Tab
+                        value="bonus"
+                        leftSection={<IconGift />}
+                        rightSection={
+                          <HoverCard>
+                            <HoverCard.Target>
+                              <IconInfoCircle color="#09B8FF" />
+                            </HoverCard.Target>
+                            <HoverCard.Dropdown>
+                              <Text>Click "My Code" button to create your own code.</Text>
+                              <Text fw={500} size="lg">
+                                Rules:
+                              </Text>
+                              <List>
+                                <List.Item>
+                                  both users must have active subscription to activate code
+                                </List.Item>
+                                <List.Item>code can be activated only once per account</List.Item>
+                              </List>
+                              <Text fw={500}>
+                                User, who enters invitation code receives 1 bonus day.
+                              </Text>
+                              <Text fw={500}>Code owner receives, if invited user buy:</Text>
+                              <List>
+                                <List.Item>Week: 1 bonus day</List.Item>
+                                <List.Item>Month: 3 bonus days</List.Item>
+                                <List.Item>Lifetime: 7 bonus days</List.Item>
+                              </List>
+                            </HoverCard.Dropdown>
+                          </HoverCard>
+                        }
+                      >
+                        <Text size="lg">Bonus</Text>
                       </Tabs.Tab>
                     </Tabs.List>
                     <Card w="100%" mt={isMobile ? 15 : 0}>
@@ -73,7 +121,7 @@ export const UserProfile = () => {
                       <Tabs.Panel value="playerlist">
                         <ServerPlayerlistControls />
                       </Tabs.Panel>
-                      <Tabs.Panel value="invites">
+                      <Tabs.Panel value="bonus">
                         <InvitesControls />
                       </Tabs.Panel>
                     </Card>
