@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { authApi } from "shared/api";
-import { LoginData } from "shared/lib/types";
 import { User } from "shared/api/users/models";
 import { useUserStore } from "store";
+import { checkSubscription } from "..";
+
+import { LoginData } from "shared/lib/types";
 
 export const useAuth = () => {
   const { clearUser, setUser, setIsAuthenticating } = useUserStore((state) => state);
@@ -12,12 +14,17 @@ export const useAuth = () => {
   const navigate = useNavigate();
 
   const setUserData = (user: User) => {
-    const { username, admin, expire_date } = user;
-    const userData = {
+    //fix. testing invitation code counter, in prod replace for real value
+    const { username, admin, expire_date, invitation_code, code_activations, is_code_activated } =
+      user;
+    const userData: User = {
       username,
       admin,
       expire_date,
-      is_authenticated: true,
+      is_active_subscription: admin ? true : checkSubscription(expire_date),
+      invitation_code,
+      code_activations,
+      is_code_activated,
     };
 
     setUser(userData);

@@ -2,6 +2,7 @@ import { Flex, TextInput, PasswordInput } from "@mantine/core";
 import { useForm, isNotEmpty } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { FC, useState } from "react";
+import { IconPasswordUser, IconUserEdit } from "@tabler/icons-react";
 
 import { usersApi } from "shared/api";
 import { useUserStore } from "store";
@@ -10,7 +11,7 @@ import { ModalButton } from "shared/ui/modal-button";
 import { Form } from "shared/ui";
 
 export const UserProfileControls: FC = () => {
-  const updateUsername = useUserStore((state) => state.updateUsername);
+  const updateUser = useUserStore((state) => state.updateUser);
   const [loading, setLoading] = useState(false);
 
   const [openedLoginModal, { open: openLoginModal, close: closeLoginModal }] = useDisclosure(false);
@@ -40,7 +41,7 @@ export const UserProfileControls: FC = () => {
     usersApi
       .changeUsername({ newUsername })
       .then((message) => {
-        updateUsername(newUsername);
+        updateUser({ username: newUsername });
         closeLoginModal();
         notification({
           message,
@@ -88,9 +89,10 @@ export const UserProfileControls: FC = () => {
   };
 
   return (
-    <Flex direction="column" gap="xs">
+    <Flex direction="column" gap="xs" w="100%">
       <ModalButton
         title="Change Username"
+        icon={<IconUserEdit />}
         opened={openedLoginModal}
         open={openLoginModal}
         close={closeLoginModal}
@@ -107,6 +109,7 @@ export const UserProfileControls: FC = () => {
       </ModalButton>
       <ModalButton
         title="Change Password"
+        icon={<IconPasswordUser />}
         opened={openedPassModal}
         open={openPassModal}
         close={closePassModal}

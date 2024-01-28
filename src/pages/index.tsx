@@ -1,8 +1,9 @@
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
-import { Title, Button, Flex, Text, AppShell, Burger, Group, Box } from "@mantine/core";
+import { Title, Button, Flex, Text, AppShell, Burger, Group, Box, Image } from "@mantine/core";
 import { FC, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { IconLogout, IconUserCircle, IconSettings } from "@tabler/icons-react";
 
 import { ProtectedRoute, ProtectedRender } from "entities/session";
 import { AdminPanel } from "./admin-panel";
@@ -48,7 +49,7 @@ const Routing: FC = () => {
           <Group style={{ flex: 1 }} justify="space-between">
             <NavLink to="/" onClick={closeNavbar}>
               <Flex align="center">
-                <img src="/logo.png" width={45} height={45} />
+                <img src="/favicon.png" width={45} height={45} />
                 <Title size="h1" fw={700} ml={5}>
                   V2HX
                 </Title>
@@ -56,21 +57,21 @@ const Routing: FC = () => {
             </NavLink>
 
             <Group ml={20} gap={20} visibleFrom="sm">
-              <NavLink to="/profile">
+              <NavLink to="/profile" icon={<IconUserCircle />}>
                 <Text size="xl" fw={500}>
                   Profile {user.username ? `(${user.username})` : null}
                 </Text>
               </NavLink>
               <ProtectedRender allowed={user.admin}>
-                <NavLink to="/admin">
+                <NavLink to="/admin" icon={<IconSettings />}>
                   <Text size="xl" fw={500}>
                     Admin Panel
                   </Text>
                 </NavLink>
               </ProtectedRender>
               <ProtectedRender allowed={user.is_authenticated}>
-                <Button variant="default" onClick={logout}>
-                  LOGOUT
+                <Button variant="default" onClick={logout} leftSection={<IconLogout />}>
+                  Log Out
                 </Button>
               </ProtectedRender>
             </Group>
@@ -79,7 +80,10 @@ const Routing: FC = () => {
               <Text size="xl" fw={500} mr={10}>
                 Need help?
               </Text>
-              <ActionButton link="https://discord.gg/8bDf3BdbYd" img="/discord.svg" />
+              <ActionButton
+                link="https://discord.gg/8bDf3BdbYd"
+                icon={<Image src="/discord.svg" />}
+              />
             </Flex>
           </Group>
         </Group>
@@ -87,32 +91,34 @@ const Routing: FC = () => {
 
       <AppShell.Navbar py="md" px={4} zIndex={250}>
         <Flex direction="column" h="100%" align="center" justify="space-around">
-          <Box>
-            <NavLink to="/profile" onClick={closeNavbar}>
-              <Title size="h2" fw={700}>
+          <Flex direction="column" gap="lg">
+            <NavLink to="/profile" icon={<IconUserCircle size={40} />} onClick={closeNavbar}>
+              <Title size="h1" fw={500}>
                 Profile {user.username ? `(${user.username})` : null}
               </Title>
             </NavLink>
             <ProtectedRender allowed={user.admin}>
-              <NavLink to="/admin" onClick={closeNavbar}>
-                <Title mt={20} size="h2" fw={700}>
+              <NavLink to="/admin" icon={<IconSettings size={40} />} onClick={closeNavbar}>
+                <Title size="h1" fw={500}>
                   Admin Panel
                 </Title>
               </NavLink>
             </ProtectedRender>
-          </Box>
+          </Flex>
 
           <ProtectedRender allowed={user.is_authenticated}>
             <Button
-              w="50%"
+              // w="50%"
+              size="xl"
               variant="default"
               ml={15}
               onClick={() => {
                 logout();
                 closeNavbar();
               }}
+              leftSection={<IconLogout />}
             >
-              LOGOUT
+              Log Out
             </Button>
           </ProtectedRender>
 
@@ -120,7 +126,10 @@ const Routing: FC = () => {
             <Text size="xl" fw={500} mr={10}>
               Need help?
             </Text>
-            <ActionButton link="https://discord.gg/8bDf3BdbYd" img="/discord.svg" />
+            <ActionButton
+              link="https://discord.gg/8bDf3BdbYd"
+              icon={<Image src="/discord.svg" />}
+            />
           </Flex>
         </Flex>
       </AppShell.Navbar>
@@ -152,7 +161,7 @@ const Routing: FC = () => {
               element={
                 <>
                   <Title size="h1" fw={700}>
-                    Page not found :(
+                    Page not found 🤕
                   </Title>
                   <Button mt={15} w={150} onClick={() => navigate("/profile")}>
                     Go to profile
@@ -162,6 +171,9 @@ const Routing: FC = () => {
             />
           </Routes>
         </AnimatePresence>
+        <Box pos="fixed" right={0} bottom={0}>
+          💤
+        </Box>
       </AppShell.Main>
     </AppShell>
   );

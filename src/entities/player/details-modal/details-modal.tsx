@@ -1,5 +1,6 @@
 import { Modal, Flex, Button, TextInput, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { IconBrandXbox } from "@tabler/icons-react";
 import { useEffect } from "react";
 
 import { IPlayerRow } from "shared/lib/types";
@@ -46,7 +47,7 @@ export const PlayerDetailsModal = ({
                   playerForm.values.gamertag
                 )}`}
                 bg="var(--mantine-color-green-filled)"
-                img="/xbox.svg"
+                icon={<IconBrandXbox size={28} />}
               />
             }
             {...playerForm.getInputProps("gamertag")}

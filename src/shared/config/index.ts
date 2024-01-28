@@ -14,6 +14,10 @@ export const API_URLS = {
     CHANGE_USERNAME: "/users/change-username",
     CHANGE_PASSWORD: "/users/change-password",
   },
+  INVITES: {
+    BASE: "/invites",
+    ACCEPT: "/invites/accept",
+  },
   INFO: "/info",
   PLAYERLIST: {
     BASE: "/playerlist",
@@ -48,3 +52,10 @@ export const SUBSCRIPTION = {
   MONTH: new Date(30 * day).getTime(),
   LIFETIME: "Lifetime",
 };
+
+export enum SubscriptionType {
+  No = "",
+  Week = "Week",
+  Month = "Month",
+  Lifetime = "Lifetime",
+}

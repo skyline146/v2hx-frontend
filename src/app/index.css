@@ -6,6 +6,31 @@
   text-align: center;
 }
 
+body {
+  scrollbar-width: var(10px); /* толщина полосы скроллбара */
+  scrollbar-color: #888888 #4e4e4e4f; /* цвет полосы и фона */
+}
+
+/* Стилизация для браузеров, использующих вебкит-движок (Chrome, Safari) */
+/* Отключение стандартного скроллбара */
+body::-webkit-scrollbar {
+  width: 10px; /* толщина полосы скроллбара */
+}
+
+/* Цвет полосы и фона */
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #888888;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #4e4e4e4f;
+}
+
+a {
+  text-decoration: inherit;
+}
+
 iframe {
   border: 2px solid black;
   border-radius: 20px;

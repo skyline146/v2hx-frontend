@@ -3,12 +3,13 @@ import { useDebouncedValue } from "@mantine/hooks";
 import { useState, useEffect } from "react";
 
 interface ISearchInputProps {
+  v?: string;
   onChange: (value: string) => void;
   w: string | number;
 }
 
-export const SearchInput = ({ onChange, w = 300 }: ISearchInputProps) => {
-  const [value, setValue] = useState("");
+export const SearchInput = ({ v, onChange, w = 300 }: ISearchInputProps) => {
+  const [value, setValue] = useState(v ?? "");
   const [debouncedSearch] = useDebouncedValue(value, 500);
 
   useEffect(() => {

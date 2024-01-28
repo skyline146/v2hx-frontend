@@ -1,24 +1,23 @@
 import { create } from "zustand";
 import { produce } from "immer";
 
-interface User {
-  username: string;
-  admin: boolean;
-  expire_date: string;
+import { User } from "shared/api/users/models";
+
+interface UserStore extends User {
   is_authenticated: boolean;
   is_authenticating: boolean;
 }
 
 interface UserState {
-  user: User;
+  user: UserStore;
   loading: boolean;
 }
 
 type Action = {
-  setUser: (user: Omit<User, "is_authenticating">) => void;
+  setUser: (user: User) => void;
   setIsAuthenticating: (is_authenticating: boolean) => void;
   clearUser: () => void;
-  updateUsername: (username: string) => void;
+  updateUser: (data: Partial<User>) => void;
   toggleLoading: () => void;
 };
 
@@ -28,23 +27,31 @@ export const useUserStore = create<UserState & Action>((set) => ({
     username: "",
     admin: false,
     expire_date: "",
+    is_active_subscription: false,
+    invitation_code: "",
+    code_activations: 0,
+    is_code_activated: true,
     is_authenticated: false,
     is_authenticating: true,
   },
   loading: false,
-  setUser: (user: Omit<User, "is_authenticating">) =>
-    set(() => ({ user: { ...user, is_authenticating: false } })),
+  setUser: (user: User) =>
+    set(
+      produce((state: UserState) => {
+        state.user = { ...user, is_authenticating: false, is_authenticated: true };
+      })
+    ),
   setIsAuthenticating: (is_authenticating: boolean) =>
     set(
       produce((state: UserState) => {
         state.user.is_authenticating = is_authenticating;
       })
     ),
-  clearUser: () => set(() => ({ user: {} as User })),
-  updateUsername: (username: string) =>
+  clearUser: () => set(() => ({ user: {} as UserStore })),
+  updateUser: (user: Partial<User>) =>
     set(
       produce((state: UserState) => {
-        state.user.username = username;
+        state.user = { ...state.user, ...user };
       })
     ),
   toggleLoading: () => set((state) => ({ loading: !state.loading })),

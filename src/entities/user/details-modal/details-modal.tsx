@@ -1,9 +1,21 @@
-import { Modal, Flex, Button, TextInput, NumberInput, CloseButton, Checkbox } from "@mantine/core";
+import {
+  Modal,
+  Flex,
+  Button,
+  TextInput,
+  NumberInput,
+  CloseButton,
+  Checkbox,
+  Image,
+  Text,
+  Fieldset,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { IconMapPin } from "@tabler/icons-react";
 import { useEffect } from "react";
 
 import { usersApi } from "shared/api";
-import { SUBSCRIPTION } from "shared/config";
+import { SUBSCRIPTION, SubscriptionType } from "shared/config";
 import { credentialsModal, addSubscription } from "shared/lib";
 import { IUserRow } from "shared/lib/types";
 import { Form, ActionButton } from "shared/ui";
@@ -31,9 +43,20 @@ export const UserDetailsModal = ({
   }, [user]);
 
   return (
-    <Modal opened={opened} onClose={close} title={`Username: ${userForm.values.username}`} centered>
+    <Modal
+      opened={opened}
+      onClose={close}
+      title={
+        <Text fw={500} size="lg">
+          Username: {userForm.values.username}
+        </Text>
+      }
+      centered
+      closeOnClickOutside={false}
+      // styles={{ body: { paddingRight: 0 } }}
+    >
       <Form onSave={() => updateUserData(userForm.values)}>
-        <Flex w="100%" direction="column" gap="xs">
+        <Flex direction="column" gap="xs">
           <Button
             color="red"
             disabled={userForm.values.admin}
@@ -51,7 +74,6 @@ export const UserDetailsModal = ({
           >
             Reset password
           </Button>
-
           <TextInput
             label="Discord"
             size="md"
@@ -59,98 +81,141 @@ export const UserDetailsModal = ({
             rightSection={
               <ActionButton
                 link={`https://discordlookup.com/user/${userForm.values.discord_id}`}
-                img="/discord.svg"
+                icon={<Image src="/discord.svg" />}
               />
             }
             {...userForm.getInputProps("discord_id")}
           />
-
-          <TextInput
-            readOnly
-            label="Subscription"
-            size="md"
-            rightSection={<CloseButton onClick={() => userForm.setFieldValue("expire_date", "")} />}
-            {...userForm.getInputProps("expire_date")}
-          />
-          <Flex justify="space-between">
-            <Button
-              onClick={() =>
-                userForm.setFieldValue(
-                  "expire_date",
-                  addSubscription(userForm.values.expire_date, SUBSCRIPTION.DAY)
-                )
-              }
-            >
-              Day
-            </Button>
-            <Button
-              onClick={() =>
-                userForm.setFieldValue(
-                  "expire_date",
-                  addSubscription(userForm.values.expire_date, SUBSCRIPTION.WEEK)
-                )
-              }
-            >
-              Week
-            </Button>
-            <Button
-              onClick={() =>
-                userForm.setFieldValue(
-                  "expire_date",
-                  addSubscription(userForm.values.expire_date, SUBSCRIPTION.MONTH)
-                )
-              }
-            >
-              Month
-            </Button>
-            <Button onClick={() => userForm.setFieldValue("expire_date", SUBSCRIPTION.LIFETIME)}>
-              ∞
-            </Button>
-          </Flex>
-          <TextInput label="HDD" size="md" {...userForm.getInputProps("hdd")} />
-          <TextInput label="MAC Address" size="md" {...userForm.getInputProps("mac_address")} />
-          <TextInput label="Last HDD" size="md" {...userForm.getInputProps("last_hdd")} />
-          <TextInput
-            label="Last MAC Address"
-            size="md"
-            {...userForm.getInputProps("last_mac_address")}
-          />
-          <TextInput
-            readOnly
-            label="Last Login"
-            size="md"
-            {...userForm.getInputProps("last_entry_date")}
-          />
-          <TextInput
-            readOnly
-            label="IP"
-            size="md"
-            rightSection={
-              <ActionButton
-                link={`https://whatismyipaddress.com/ip/${userForm.values.ip}`}
-                img="/pin.png"
+          <Fieldset legend="Subscription" m={0} pl={10} pr={10}>
+            <Flex direction="column" gap="xs">
+              <TextInput label="Type" size="md" {...userForm.getInputProps("subscription_type")} />
+              <TextInput
+                readOnly
+                label="Duration"
+                size="md"
+                rightSection={
+                  <CloseButton
+                    onClick={() =>
+                      userForm.setValues({
+                        expire_date: SubscriptionType.No,
+                        subscription_type: SubscriptionType.No,
+                      })
+                    }
+                  />
+                }
+                {...userForm.getInputProps("expire_date")}
               />
-            }
-            {...userForm.getInputProps("ip")}
-          />
-          <TextInput
-            readOnly
-            label="Last IP"
-            size="md"
-            rightSection={
-              <ActionButton
-                link={`https://whatismyipaddress.com/ip/${userForm.values.last_ip}`}
-                img="/pin.png"
+              <Flex justify="space-between">
+                <Button
+                  onClick={() =>
+                    userForm.setFieldValue(
+                      "expire_date",
+                      addSubscription(userForm.values.expire_date, SUBSCRIPTION.DAY)
+                    )
+                  }
+                >
+                  Day
+                </Button>
+                <Button
+                  onClick={() =>
+                    userForm.setValues({
+                      expire_date: addSubscription(userForm.values.expire_date, SUBSCRIPTION.WEEK),
+                      subscription_type: SubscriptionType.Week,
+                    })
+                  }
+                >
+                  Week
+                </Button>
+                <Button
+                  onClick={() =>
+                    userForm.setValues({
+                      expire_date: addSubscription(userForm.values.expire_date, SUBSCRIPTION.MONTH),
+                      subscription_type: SubscriptionType.Month,
+                    })
+                  }
+                >
+                  Month
+                </Button>
+                <Button
+                  onClick={() =>
+                    userForm.setValues({
+                      expire_date: SUBSCRIPTION.LIFETIME,
+                      subscription_type: SubscriptionType.Lifetime,
+                    })
+                  }
+                >
+                  ∞
+                </Button>
+              </Flex>
+            </Flex>
+          </Fieldset>
+          <Fieldset legend="Invites" m={0} pl={10} pr={10}>
+            <Flex direction="column" gap="xs">
+              <Text>Users invited: {userForm.values.code_activations}</Text>
+              <TextInput
+                label="Invitation Code"
+                size="md"
+                {...userForm.getInputProps("invitation_code")}
               />
-            }
-            {...userForm.getInputProps("last_ip")}
-          />
-          <NumberInput label="Warn" size="md" {...userForm.getInputProps("warn")} />
-          <Checkbox
-            label="Ban"
-            size="md"
-            {...userForm.getInputProps("ban", { type: "checkbox" })}
-          />
+              <Checkbox
+                label="Code Activated"
+                size="md"
+                {...userForm.getInputProps("is_code_activated", { type: "checkbox" })}
+              />
+            </Flex>
+          </Fieldset>
+          <Fieldset legend="Login Data" m={0} pl={10} pr={10}>
+            <Flex direction="column" gap="xs">
+              <TextInput label="HDD" size="md" {...userForm.getInputProps("hdd")} />
+              <TextInput label="MAC Address" size="md" {...userForm.getInputProps("mac_address")} />
+              <TextInput label="Last HDD" size="md" {...userForm.getInputProps("last_hdd")} />
+              <TextInput
+                label="Last MAC Address"
+                size="md"
+                {...userForm.getInputProps("last_mac_address")}
+              />
+              <TextInput
+                readOnly
+                label="Last Login"
+                size="md"
+                {...userForm.getInputProps("last_entry_date")}
+              />
+              <TextInput
+                readOnly
+                label="IP"
+                size="md"
+                rightSection={
+                  <ActionButton
+                    link={`https://whatismyipaddress.com/ip/${userForm.values.ip}`}
+                    icon={<IconMapPin />}
+                  />
+                }
+                {...userForm.getInputProps("ip")}
+              />
+              <TextInput
+                readOnly
+                label="Last IP"
+                size="md"
+                rightSection={
+                  <ActionButton
+                    link={`https://whatismyipaddress.com/ip/${userForm.values.last_ip}`}
+                    icon={<IconMapPin />}
+                  />
+                }
+                {...userForm.getInputProps("last_ip")}
+              />
+            </Flex>
+          </Fieldset>
+          <Fieldset legend="Restrictions" m={0} pl={10} pr={10}>
+            <Flex direction="column" gap="xs">
+              <NumberInput label="Warns" size="md" {...userForm.getInputProps("warn")} />
+              <Checkbox
+                label="Ban"
+                size="md"
+                {...userForm.getInputProps("ban", { type: "checkbox" })}
+              />
+            </Flex>
+          </Fieldset>
         </Flex>
       </Form>
     </Modal>

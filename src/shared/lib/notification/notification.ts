@@ -10,5 +10,5 @@ export const notification = ({ message, type }: INotification) =>
     title: `${type}! ${message}`,
     message: "",
     color: type === "Error" ? "red" : "green",
-    autoClose: 2000,
+    autoClose: 3000,
   });

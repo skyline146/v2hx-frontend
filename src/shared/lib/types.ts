@@ -24,6 +24,7 @@ export type Info = {
 };
 
 export interface IUserRow extends User {
+  subscription_type: string;
   hdd: string;
   last_hdd: string;
   mac_address: string;

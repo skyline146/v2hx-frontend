@@ -3,11 +3,26 @@ import { Carousel } from "@mantine/carousel";
 import { useState } from "react";
 import { useMediaQuery } from "@mantine/hooks";
 import { motion } from "framer-motion";
+import {
+  IconDeviceNintendo,
+  IconMovie,
+  IconViewfinder,
+  IconEye,
+  IconSettings,
+  IconDeviceFloppy,
+} from "@tabler/icons-react";
 
 import { AnimatedPage } from "pages/animated-page";
-import { FeaturesAccordion } from "./features-accordion";
+import { FeaturesSlide } from "./features-slide";
 import { ShowcaseVideo } from "./showcase-video";
 import { FeaturesList } from "shared/lib/types";
+
+const icons = [
+  <IconViewfinder size={40} />,
+  <IconEye size={40} />,
+  <IconSettings size={40} />,
+  <IconDeviceFloppy size={40} />,
+];
 
 interface IHomePageProps {
   featuresData: FeaturesList | null;
@@ -49,12 +64,18 @@ export const HomePage = ({ featuresData }: IHomePageProps) => {
           <Tabs.List grow mb={10}>
             <Tabs.Tab value="features">
               <Title c={activeTab === "features" ? "violet" : undefined} size="h1">
-                Features
+                <Flex align="center" gap="xs">
+                  <IconDeviceNintendo size={35} />
+                  Features
+                </Flex>
               </Title>
             </Tabs.Tab>
             <Tabs.Tab color="red" value="videos">
               <Title c={activeTab === "videos" ? "red" : undefined} size="h1">
-                Showcase
+                <Flex align="center" gap="xs">
+                  <IconMovie size={35} />
+                  Showcase
+                </Flex>
               </Title>
             </Tabs.Tab>
           </Tabs.List>
@@ -104,8 +125,8 @@ export const HomePage = ({ featuresData }: IHomePageProps) => {
                       marginTop: isMobile ? 15 : 0,
                     }}
                   >
-                    <FeaturesAccordion
-                      icon={featuresData[currentSlide].icon}
+                    <FeaturesSlide
+                      icon={icons[currentSlide]}
                       title={featuresData[currentSlide].title}
                       columns={featuresData[currentSlide].columns}
                     />

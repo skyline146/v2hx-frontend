@@ -37,7 +37,6 @@ api.interceptors.response.use(
       } else {
         if (location.pathname === "/") return;
         // Не удалось обновить токен, перенаправляем на страницу входа
-        // window.location.replace("/login");
         history.push("/login");
         return Promise.reject(err);
       }

@@ -20,16 +20,36 @@ export const SubcriptionText = (props: { expire_date: string; size?: string }) =
     );
   }
 
-  const isActive = new Date(expire_date).getTime() > Date.now();
+  const parsedExpireDate = new Date(expire_date);
+
+  const isActive = parsedExpireDate.getTime() > Date.now();
+
+  let result = "";
+
+  if (isActive) {
+    const days = Math.floor((parsedExpireDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      ((parsedExpireDate.getTime() - Date.now()) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+
+    if (days === 0) {
+      result = `${hours}h`;
+    } else {
+      result = `${days}d ${hours}h`;
+    }
+  }
 
   return (
     <>
-      <Text size={size} c="green">
-        {new Date(expire_date).toLocaleString()}
-      </Text>
-      <Text size={size} c={isActive ? "teal" : "red"}>
-        {isActive ? "Active" : "Expired"}
-      </Text>
+      {isActive ? (
+        <Text size={size} c="green">
+          {`${result}`}
+        </Text>
+      ) : (
+        <Text size={size} c="red">
+          Expired
+        </Text>
+      )}
     </>
   );
 };

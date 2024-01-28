@@ -7,6 +7,7 @@ export const credentialsModal = (username: string, password: string) =>
   modals.open({
     title: "New Account",
     centered: true,
+    closeOnClickOutside: false,
     children: (
       <Flex direction="column" gap="sm">
         <Text fw={700} variant="gradient" gradient={{ from: "blue", to: "cyan", deg: 90 }}>
@@ -18,7 +19,7 @@ export const credentialsModal = (username: string, password: string) =>
         <CopyButton value={textToCopy(username, password)}>
           {({ copied, copy }) => (
             <Button color={copied ? "teal" : "blue"} onClick={copy}>
-              {copied ? "Copied!" : "Copy to clipboard"}
+              {copied ? "Copied!" : "Copy"}
             </Button>
           )}
         </CopyButton>

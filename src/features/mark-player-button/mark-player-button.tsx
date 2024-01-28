@@ -2,6 +2,7 @@ import { TextInput, Select, MantineSize, Text } from "@mantine/core";
 import { useForm, isNotEmpty } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
+import { IconBookmarkPlus } from "@tabler/icons-react";
 
 import { playerlistApi } from "shared/api";
 import { notification } from "shared/lib";
@@ -12,9 +13,10 @@ import { Player } from "shared/lib/types";
 interface IMarkPlayerButtonProps {
   size?: MantineSize;
   w?: string | number;
+  disabled?: boolean;
 }
 
-export const MarkPlayerButton = ({ size = "md", w }: IMarkPlayerButtonProps) => {
+export const MarkPlayerButton = ({ size = "md", w, disabled }: IMarkPlayerButtonProps) => {
   const [loading, setLoading] = useState(false);
 
   const [openedPassModal, { open: openPassModal, close: closePassModal }] = useDisclosure(false);
@@ -58,14 +60,21 @@ export const MarkPlayerButton = ({ size = "md", w }: IMarkPlayerButtonProps) => 
   return (
     <ModalButton
       title="Mark Player"
+      icon={<IconBookmarkPlus />}
       size={size}
       w={w}
+      disabled={disabled}
       opened={openedPassModal}
       open={openPassModal}
       close={closePassModal}
     >
       <Form onSave={addPlayer} loading={loading} gap="xs">
-        <TextInput label="Gamertag*:" size="md" {...playerForm.getInputProps("gamertag")} />
+        <TextInput
+          label="Gamertag*:"
+          size="md"
+          data-autofocus
+          {...playerForm.getInputProps("gamertag")}
+        />
         <Select
           label="Type:"
           size="md"
@@ -77,7 +86,7 @@ export const MarkPlayerButton = ({ size = "md", w }: IMarkPlayerButtonProps) => 
           {...playerForm.getInputProps("type")}
         />
         <TextInput size="md" label="Reason/Link:" {...playerForm.getInputProps("reason")} />
-        <Text>* Validating by Xbox</Text>
+        <Text>* Validating by Xbox Live</Text>
       </Form>
     </ModalButton>
   );

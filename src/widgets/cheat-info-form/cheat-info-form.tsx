@@ -25,10 +25,10 @@ export const CheatInfoForm = () => {
   }, []);
 
   return (
-    <Flex w="100%" justify="center">
+    <Flex justify="center" w="100%">
       <Form
-        w={isMobile ? "100%" : 400}
         gap="xs"
+        w={isMobile ? "100%" : 400}
         loading={loading}
         onSave={() => {
           setLoading(true);

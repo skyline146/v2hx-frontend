@@ -1,4 +1,5 @@
-import { Flex, Box, Button, MantineSize } from "@mantine/core";
+import { Flex, Button, MantineSize, ScrollArea } from "@mantine/core";
+import { IconDeviceFloppy } from "@tabler/icons-react";
 import { FC } from "react";
 
 interface IFormProps {
@@ -19,13 +20,29 @@ export const Form: FC<IFormProps> = ({ children, onSave, loading, w, gap }: IFor
       }}
       style={{ width: w }}
     >
-      <Flex w={w} gap={gap} direction="column">
-        {children}
-        <Box mt={15} w={150} style={{ alignSelf: "center" }}>
-          <Button loading={loading} size="md" type="submit" w="100%">
+      <Flex gap={gap} direction="column">
+        <ScrollArea
+          scrollbars="y"
+          scrollbarSize={8}
+          scrollHideDelay={0}
+          styles={{ scrollbar: { zIndex: 10 } }}
+          mb={15}
+        >
+          <Flex gap={gap} direction="column" mah="70vh">
+            {children}
+          </Flex>
+        </ScrollArea>
+        <Flex>
+          <Button
+            w="100%"
+            loading={loading}
+            size="md"
+            type="submit"
+            leftSection={<IconDeviceFloppy />}
+          >
             Save
           </Button>
-        </Box>
+        </Flex>
       </Flex>
     </form>
   );

@@ -1,13 +1,14 @@
-import { Badge, Fieldset, Flex, Group, Text, Loader } from "@mantine/core";
+import { Badge, Flex, Group, Text, Loader, Card } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
+import { IconSearch, IconBrandXbox } from "@tabler/icons-react";
 
 import { MarkPlayerButton } from "features/mark-player-button";
 import { SearchInput } from "features/search-input";
 import { ActionButton, ModalButton } from "shared/ui";
 import { playerlistApi } from "shared/api";
-import { playerType, playerBadge } from "shared/config";
 
+import { playerType, playerBadge } from "shared/config";
 import { Player } from "shared/lib/types";
 
 export const ServerPlayerlistControls = () => {
@@ -29,44 +30,43 @@ export const ServerPlayerlistControls = () => {
   }, [searchValue]);
 
   return (
-    <Fieldset variant="filled" legend={<Text size="lg">{"Server Playerlist"}</Text>} p={10}>
-      <Flex direction="column" gap="xs">
-        <MarkPlayerButton w="100%" />
-        <ModalButton
-          title="Find Player"
-          w="100%"
-          opened={openedSearch}
-          open={openSearchModal}
-          close={closeSearchModal}
-        >
-          <Flex direction="column">
-            <SearchInput w="100%" onChange={(v) => setSearchValue(v)} />
-            {loading ? (
-              <Flex justify="center">
-                <Loader mt={20} />
-              </Flex>
-            ) : player ? (
-              <>
-                <Group mt="md">
-                  <Text size="xl" fw={500}>
-                    {player.gamertag}
-                  </Text>
-                  <Badge color={playerBadge[player.type]}>{playerType[player.type]}</Badge>
-                  <ActionButton
-                    link={`https://account.xbox.com/en-us/profile?gamertag=${encodeURIComponent(
-                      player.gamertag
-                    )}`}
-                    bg="var(--mantine-color-green-filled)"
-                    img="/xbox.svg"
-                  />
-                </Group>
+    <Flex direction="column" gap="xs" w="100%">
+      <MarkPlayerButton w="100%" />
+      <ModalButton
+        title="Find Player"
+        icon={<IconSearch />}
+        w="100%"
+        opened={openedSearch}
+        open={openSearchModal}
+        close={closeSearchModal}
+      >
+        <Flex direction="column">
+          <SearchInput w="100%" v={searchValue} onChange={(v) => setSearchValue(v)} />
+          {loading ? (
+            <Flex justify="center">
+              <Loader mt={20} />
+            </Flex>
+          ) : player ? (
+            <Card mt="md" shadow="sm" radius="md">
+              <Group>
+                <Text size="xl" fw={500}>
+                  {player.gamertag}
+                </Text>
+                <Badge color={playerBadge[player.type]}>{playerType[player.type]}</Badge>
+                <ActionButton
+                  link={`https://account.xbox.com/en-us/profile?gamertag=${encodeURIComponent(
+                    player.gamertag
+                  )}`}
+                  bg="var(--mantine-color-green-filled)"
+                  icon={<IconBrandXbox size={28} />}
+                />
+              </Group>
 
-                <Text>{player.reason}</Text>
-              </>
-            ) : null}
-          </Flex>
-        </ModalButton>
-      </Flex>
-    </Fieldset>
+              <Text>{player.reason}</Text>
+            </Card>
+          ) : null}
+        </Flex>
+      </ModalButton>
+    </Flex>
   );
 };

@@ -1,21 +1,23 @@
-import { Flex, Title, Accordion, List, Checkbox, Image, Text } from "@mantine/core";
+import { Flex, Title, Accordion, List, Checkbox, Text } from "@mantine/core";
 import { useState } from "react";
 
 interface IFeaturesAccordion {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   columns: { name: string; features: string[] }[];
 }
 
-export const FeaturesAccordion = ({ icon, title, columns }: IFeaturesAccordion) => {
+export const FeaturesSlide = ({ icon, title, columns }: IFeaturesAccordion) => {
   const [activeItem, setActiveItem] = useState<string | null>(null);
 
   return (
     <Flex direction="column" align="flex-start">
       <Flex align="center">
-        <Image w={40} h={40} src={icon} />
-        <Title c="cyan" size="h1" ml={10} mb={10}>
-          {title}
+        <Title c="violet" size="h1" mb={10}>
+          <Flex align="center" gap="xs">
+            {icon}
+            {title}
+          </Flex>
         </Title>
       </Flex>
       <Accordion

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /$
+Allow: /profile/
+Allow: /sitemap.xml
+Allow: /robots.txt
+
+Disallow: /admin/
+
+Sitemap: https://v2hx.pro/sitemap.xml
