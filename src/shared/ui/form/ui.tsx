@@ -22,7 +22,6 @@ export const Form: FC<IFormProps> = ({ children, onSave, loading, w, gap }: IFor
     >
       <Flex gap={gap} direction="column">
         <ScrollArea
-          scrollbars="y"
           scrollbarSize={8}
           scrollHideDelay={0}
           styles={{ scrollbar: { zIndex: 10 } }}
