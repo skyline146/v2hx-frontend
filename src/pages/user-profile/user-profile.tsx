@@ -95,14 +95,14 @@ export const UserProfile = () => {
                                 <List.Item>Toxic🟢</List.Item>
                               </List>
                               <Text>
-                                If marked player in your session, they gamertag be highlighted due
-                                to category.
+                                If marked player is in your session, they gamertag be highlighted
+                                due to category.
                               </Text>
                               <Text fw={500}>
-                                Also you can check if player already exists in database.
+                                If you want to check if player already marked in database,
                               </Text>
                               <Text fw={500}>
-                                Enter gamertag(case insensitive) in search field(Find Player).
+                                enter gamertag(case insensitive) in search field(Find Player).
                               </Text>
                             </HoverCard.Dropdown>
                           </HoverCard>
