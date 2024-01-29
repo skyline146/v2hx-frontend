@@ -178,23 +178,24 @@ export const UserDetailsModal = ({
                 readOnly
                 label="Last Login"
                 size="md"
-                {...userForm.getInputProps("last_entry_date")}
+                value={userForm.values.last_entry_date}
               />
               <TextInput
                 readOnly
                 label="IP"
                 size="md"
+                value={userForm.values.ip}
                 rightSection={
                   <ActionButton
                     link={`https://whatismyipaddress.com/ip/${userForm.values.ip}`}
                     icon={<IconMapPin />}
                   />
                 }
-                {...userForm.getInputProps("ip")}
               />
               <TextInput
                 readOnly
                 label="Last IP"
+                value={userForm.values.last_ip}
                 size="md"
                 rightSection={
                   <ActionButton
@@ -202,7 +203,6 @@ export const UserDetailsModal = ({
                     icon={<IconMapPin />}
                   />
                 }
-                {...userForm.getInputProps("last_ip")}
               />
             </Flex>
           </Fieldset>
