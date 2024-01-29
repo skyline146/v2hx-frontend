@@ -38,7 +38,7 @@ iframe {
 }
 
 .menu-carousel {
-  border: 1.5px solid #9848e8;
+  border: 1.5px solid var(--mantine-color-violet-text);
   width: 750px;
   height: 500px;
   border-radius: 10px;

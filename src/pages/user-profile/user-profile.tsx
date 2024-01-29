@@ -76,7 +76,38 @@ export const UserProfile = () => {
                       <Tabs.Tab value="profile" leftSection={<IconAddressBook />}>
                         <Text size="lg">Account</Text>
                       </Tabs.Tab>
-                      <Tabs.Tab value="playerlist" leftSection={<IconServerCog />}>
+                      <Tabs.Tab
+                        value="playerlist"
+                        leftSection={<IconServerCog />}
+                        rightSection={
+                          <HoverCard>
+                            <HoverCard.Target>
+                              <IconInfoCircle color="#09B8FF" />
+                            </HoverCard.Target>
+                            <HoverCard.Dropdown>
+                              <Text fw={500}>
+                                You can add player(Mark Player) to playerlist by gamertag, that
+                                match category:
+                              </Text>
+                              <List>
+                                <List.Item>Streamer🟣</List.Item>
+                                <List.Item>Cheater🔴</List.Item>
+                                <List.Item>Toxic🟢</List.Item>
+                              </List>
+                              <Text>
+                                If marked player in your session, they gamertag be highlighted due
+                                to category.
+                              </Text>
+                              <Text fw={500}>
+                                Also you can check if player already exists in database.
+                              </Text>
+                              <Text fw={500}>
+                                Enter gamertag(case insensitive) in search field(Find Player).
+                              </Text>
+                            </HoverCard.Dropdown>
+                          </HoverCard>
+                        }
+                      >
                         <Text size="lg">Server Playerlist</Text>
                       </Tabs.Tab>
                       <Tabs.Tab

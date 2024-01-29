@@ -10,6 +10,8 @@ import {
   IconEye,
   IconSettings,
   IconDeviceFloppy,
+  IconArrowLeft,
+  IconArrowRight,
 } from "@tabler/icons-react";
 
 import { AnimatedPage } from "pages/animated-page";
@@ -96,7 +98,10 @@ export const HomePage = ({ featuresData }: IHomePageProps) => {
                   dragFree={isMobile}
                   className="menu-carousel"
                   style={{ flex: 0.5 }}
+                  speed={7}
                   onSlideChange={(index) => setCurrentSlide(index)}
+                  nextControlIcon={<IconArrowRight />}
+                  previousControlIcon={<IconArrowLeft />}
                 >
                   <Carousel.Slide>
                     <img src="/menu/assistance.png" />
@@ -118,7 +123,7 @@ export const HomePage = ({ featuresData }: IHomePageProps) => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     // exit={{ opacity: 0, x: 20 }}
-                    transition={{ duration: 0.32, ease: "easeOut" }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                     style={{
                       flex: 0.5,
                       marginLeft: isMobile ? 0 : 20,
