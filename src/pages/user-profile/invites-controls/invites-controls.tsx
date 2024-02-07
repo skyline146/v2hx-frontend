@@ -141,7 +141,7 @@ export const InvitesControls = () => {
         open={openEnterModal}
         close={closeEnterModal}
       >
-        <Form onSave={sendCode} loading={false}>
+        <Form onSave={sendCode} loading={loading}>
           <TextInput
             w="100%"
             size="md"

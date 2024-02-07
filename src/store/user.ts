@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { produce } from "immer";
 
 import { User } from "shared/api/users/models";
+import { SubscriptionType } from "shared/config";
 
 interface UserStore extends User {
   is_authenticated: boolean;
@@ -27,6 +28,7 @@ export const useUserStore = create<UserState & Action>((set) => ({
     username: "",
     admin: false,
     expire_date: "",
+    subscription_type: SubscriptionType.No,
     is_active_subscription: false,
     invitation_code: "",
     code_activations: 0,

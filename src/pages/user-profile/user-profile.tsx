@@ -24,10 +24,12 @@ import { useUserStore } from "store";
 import { UserProfileControls } from "./user-profile-controls";
 import { ServerPlayerlistControls } from "./server-playerlist-controls";
 import { InvitesControls } from "./invites-controls";
-import { SubcriptionText } from "entities/subscription-text";
+import { SubscriptionText } from "entities/subscription-text";
 
 export const UserProfile = () => {
-  const { username, expire_date, is_active_subscription } = useUserStore((state) => state.user);
+  const { username, expire_date, is_active_subscription, subscription_type } = useUserStore(
+    (state) => state.user
+  );
 
   const isMobile = useMediaQuery(`(max-width: 550px)`);
 
@@ -44,7 +46,11 @@ export const UserProfile = () => {
             Subscription:
           </Text>
           <Card w={250} p={5}>
-            <SubcriptionText size="xl" expire_date={expire_date} />
+            <SubscriptionText
+              size="xl"
+              subscription_type={subscription_type}
+              expire_date={expire_date}
+            />
           </Card>
 
           {!is_active_subscription ? (

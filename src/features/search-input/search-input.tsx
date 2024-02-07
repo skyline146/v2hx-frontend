@@ -6,11 +6,12 @@ interface ISearchInputProps {
   v?: string;
   onChange: (value: string) => void;
   w: string | number;
+  debounce?: number;
 }
 
-export const SearchInput = ({ v, onChange, w = 300 }: ISearchInputProps) => {
+export const SearchInput = ({ v, onChange, w = 300, debounce = 300 }: ISearchInputProps) => {
   const [value, setValue] = useState(v ?? "");
-  const [debouncedSearch] = useDebouncedValue(value, 500);
+  const [debouncedSearch] = useDebouncedValue(value, debounce);
 
   useEffect(() => {
     onChange(debouncedSearch);

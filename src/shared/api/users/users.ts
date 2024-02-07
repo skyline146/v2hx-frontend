@@ -9,6 +9,7 @@ export const create = async (): Promise<LoginData> => {
 export type GetUsers = {
   page: number;
   search_value?: string;
+  filter?: string;
 };
 
 export const get = async (params: GetUsers): Promise<IUsersTable> => {

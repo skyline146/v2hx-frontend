@@ -1,13 +1,19 @@
 import { Text } from "@mantine/core";
+import { SubscriptionType } from "shared/config";
+// import { UserRo } from "shared/api/users/models";
 
-export const SubcriptionText = (props: { expire_date: string; size?: string }) => {
-  const { expire_date, size } = props;
+export const SubscriptionText = (props: {
+  subscription_type: SubscriptionType;
+  expire_date: string;
+  size?: string;
+}) => {
+  const { subscription_type, expire_date, size } = props;
 
-  if (!expire_date) {
+  if (!subscription_type) {
     return <Text size={size}>No subscription</Text>;
   }
 
-  if (expire_date === "Lifetime") {
+  if (subscription_type === "Lifetime") {
     return (
       <Text
         size={size}
@@ -24,32 +30,29 @@ export const SubcriptionText = (props: { expire_date: string; size?: string }) =
 
   const isActive = parsedExpireDate.getTime() > Date.now();
 
-  let result = "";
-
-  if (isActive) {
-    const days = Math.floor((parsedExpireDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      ((parsedExpireDate.getTime() - Date.now()) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  if (!isActive) {
+    return (
+      <Text size={size} c="red">
+        Expired
+      </Text>
     );
+  }
 
-    if (days === 0) {
-      result = `${hours}h`;
-    } else {
-      result = `${days}d ${hours}h`;
-    }
+  let resultTime = "";
+  const days = Math.floor((parsedExpireDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    ((parsedExpireDate.getTime() - Date.now()) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+
+  if (days === 0) {
+    resultTime = `${hours}h`;
+  } else {
+    resultTime = `${days}d ${hours}h`;
   }
 
   return (
-    <>
-      {isActive ? (
-        <Text size={size} c="green">
-          {`${result}`}
-        </Text>
-      ) : (
-        <Text size={size} c="red">
-          Expired
-        </Text>
-      )}
-    </>
+    <Text size={size} c="green">
+      {`${resultTime}`}
+    </Text>
   );
 };

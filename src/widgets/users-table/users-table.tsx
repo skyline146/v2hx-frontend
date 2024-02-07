@@ -1,4 +1,4 @@
-import { Table, Pagination, Flex, Button, Text } from "@mantine/core";
+import { Table, Pagination, Flex, Button, Text, Radio, Menu } from "@mantine/core";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
@@ -17,12 +17,15 @@ export const UsersTable = () => {
   const [loading, setLoading] = useState(false);
   const [selectedUser, setSelectedUser] = useState<IUserRow>({} as IUserRow);
   const [searchValue, setSearchValue] = useState("");
+  const [filter, setFilter] = useState("");
 
   const { setTotal, setUsers, updateUser, users, total } = useUsersStore((state) => state);
 
   const [openedUserModal, { open: openUserModal, close: closeUserModal }] = useDisclosure(false);
 
   const isMobile = useMediaQuery(`(max-width: 700px)`);
+
+  // console.log(searchValue);
 
   const createUser = async () => {
     await usersApi.create().then((data) => {
@@ -75,8 +78,12 @@ export const UsersTable = () => {
   );
 
   useEffect(() => {
-    getUsers({ page: activePage, search_value: searchValue ? searchValue : undefined });
-  }, [activePage, searchValue, getUsers]);
+    getUsers({
+      page: activePage,
+      search_value: searchValue ? searchValue : undefined,
+      filter: filter ? filter : undefined,
+    });
+  }, [activePage, searchValue, getUsers, filter]);
 
   useEffect(() => {
     setPage(1);
@@ -123,11 +130,31 @@ export const UsersTable = () => {
         >
           <Flex align="center" direction={isMobile ? "column" : "row"}>
             <SearchInput w={isMobile ? "100%" : 400} onChange={(v) => setSearchValue(v)} />
+            <Menu trigger="click-hover" shadow="md" width={200} withArrow>
+              <Menu.Target>
+                <Button ml={10}>Filters</Button>
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Menu.Label>Filters</Menu.Label>
+                <Menu.Divider />
+                <Radio.Group value={filter}>
+                  <Menu.Item onClick={() => setFilter("")}>
+                    <Radio value="" label="All" />
+                  </Menu.Item>
+                  <Menu.Item onClick={() => setFilter("active_subscription")}>
+                    <Radio value="active_subscription" label="Active Subscription" />
+                  </Menu.Item>
+                  <Menu.Item onClick={() => setFilter("online")}>
+                    <Radio value="online" label="Online" />
+                  </Menu.Item>
+                </Radio.Group>
+              </Menu.Dropdown>
+            </Menu>
             <Text ml={isMobile ? 0 : 20} size="xl">
               Total: {total}
             </Text>
           </Flex>
-          {/* <Text c="green">Online: {onlineUsers.total}</Text> */}
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
             <Button onClick={createUser}>+ Create New Account</Button>
             <Button onClick={addFreeDay}>Add 1 Free Day</Button>

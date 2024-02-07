@@ -1,5 +1,5 @@
 import { Table, Checkbox, Indicator } from "@mantine/core";
-import { SubcriptionText } from "entities/subscription-text";
+import { SubscriptionText } from "entities/subscription-text";
 import { IUserRow } from "shared/lib/types";
 import { truncate } from "shared/lib";
 
@@ -13,6 +13,7 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
     username,
     discord_id,
     expire_date,
+    subscription_type,
     hdd,
     mac_address,
     last_hdd,
@@ -34,7 +35,7 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
       </Table.Td>
       <Table.Td>{truncate(discord_id, 10)}</Table.Td>
       <Table.Td>
-        <SubcriptionText expire_date={expire_date} />
+        <SubscriptionText subscription_type={subscription_type} expire_date={expire_date} />
       </Table.Td>
       <Table.Td>{truncate(hdd, 20)}</Table.Td>
       <Table.Td>{mac_address}</Table.Td>

@@ -1,6 +1,10 @@
-export const checkSubscription = (expire_Date: string) => {
-  const expire_date = new Date(expire_Date);
-  if (expire_Date !== "Lifetime" && (!expire_Date || expire_date.getTime() < Date.now())) {
+import { User } from "shared/api/users/models";
+
+export const checkSubscription = (user: User) => {
+  if (
+    user.subscription_type !== "Lifetime" &&
+    (!user.subscription_type || new Date(user.expire_date).getTime() < Date.now())
+  ) {
     return false;
   }
 

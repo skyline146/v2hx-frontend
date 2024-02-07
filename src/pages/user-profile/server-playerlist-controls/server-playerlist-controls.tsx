@@ -41,7 +41,12 @@ export const ServerPlayerlistControls = () => {
         close={closeSearchModal}
       >
         <Flex direction="column">
-          <SearchInput w="100%" v={searchValue} onChange={(v) => setSearchValue(v)} />
+          <SearchInput
+            w="100%"
+            v={searchValue}
+            onChange={(v) => setSearchValue(v)}
+            debounce={500}
+          />
           {loading ? (
             <Flex justify="center">
               <Loader mt={20} />

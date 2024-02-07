@@ -14,14 +14,22 @@ export const useAuth = () => {
   const navigate = useNavigate();
 
   const setUserData = (user: User) => {
-    //fix. testing invitation code counter, in prod replace for real value
-    const { username, admin, expire_date, invitation_code, code_activations, is_code_activated } =
-      user;
+    const {
+      username,
+      admin,
+      expire_date,
+      invitation_code,
+      code_activations,
+      is_code_activated,
+      subscription_type,
+    } = user;
+
     const userData: User = {
       username,
       admin,
       expire_date,
-      is_active_subscription: admin ? true : checkSubscription(expire_date),
+      subscription_type,
+      is_active_subscription: admin ? true : checkSubscription(user),
       invitation_code,
       code_activations,
       is_code_activated,

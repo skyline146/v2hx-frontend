@@ -1,1 +1,1 @@
-export { SubcriptionText } from "./ui";
+export { SubscriptionText } from "./ui";
