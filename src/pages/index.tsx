@@ -1,6 +1,17 @@
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
-import { Title, Button, Flex, Text, AppShell, Burger, Group, Box, Image } from "@mantine/core";
+import {
+  Title,
+  Button,
+  Flex,
+  Text,
+  AppShell,
+  Burger,
+  Group,
+  Box,
+  Image,
+  Card,
+} from "@mantine/core";
 import { FC, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { IconLogout, IconUserCircle, IconSettings } from "@tabler/icons-react";
@@ -20,6 +31,7 @@ const Routing: FC = () => {
   const user = useUserStore((state) => state.user);
   const { logout } = useAuth();
   const [featuresData, setFeaturesData] = useState<FeaturesList | null>(null);
+  const [visibleZ, setVisibleZ] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -171,7 +183,34 @@ const Routing: FC = () => {
             />
           </Routes>
         </AnimatePresence>
-        <Box pos="fixed" right={0} bottom={0}>
+        <Card
+          display={visibleZ ? "block" : "none"}
+          shadow="lg"
+          withBorder
+          w="100vw"
+          h="100vh"
+          style={{
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 201,
+          }}
+        >
+          <Text fw={500} fz={600} style={{ lineHeight: 1, padding: 0, margin: 0 }}>
+            Z
+          </Text>
+        </Card>
+        <Box
+          onMouseEnter={() => setVisibleZ(true)}
+          onMouseLeave={() => setVisibleZ(false)}
+          style={{
+            position: "fixed",
+            right: 0,
+            bottom: 0,
+            zIndex: 202,
+          }}
+        >
           💤
         </Box>
       </AppShell.Main>
