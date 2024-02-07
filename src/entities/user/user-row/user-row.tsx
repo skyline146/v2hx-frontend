@@ -1,4 +1,4 @@
-import { Table, Checkbox, Indicator } from "@mantine/core";
+import { Table, Checkbox, Indicator, Text } from "@mantine/core";
 import { SubscriptionText } from "entities/subscription-text";
 import { IUserRow } from "shared/lib/types";
 import { truncate } from "shared/lib";
@@ -29,8 +29,16 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
   return (
     <Table.Tr onClick={onClick} style={{ cursor: "pointer" }}>
       <Table.Td>
-        <Indicator zIndex={1} position="top-start" color={online ? "green" : "gray"}>
-          {username}
+        <Indicator
+          zIndex={1}
+          position="middle-start"
+          size={12}
+          color={ban ? "red" : online ? "green" : "gray"}
+          withBorder
+        >
+          <Text fw={400} size="md">
+            {username}
+          </Text>
         </Indicator>
       </Table.Td>
       <Table.Td>{truncate(discord_id, 10)}</Table.Td>
