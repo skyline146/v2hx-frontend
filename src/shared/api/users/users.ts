@@ -43,3 +43,10 @@ export const remove = async (username: string): Promise<void> => {
 export const addFreeDay = async (): Promise<void> => {
   return api.patch(API_URLS.USERS.ADD_FREE_DAY);
 };
+
+export const disconnect = async (username: string): Promise<void> => {
+  return api.post(`${API_URLS.USERS.BASE}/${username}${API_URLS.USERS.EMIT_EVENT}`, {
+    event: "admin-disconnect",
+    data: { username },
+  });
+};

@@ -52,6 +52,9 @@ export const AuthForm: FC = () => {
         >
           Clear
         </Button>
+        <a href="https://discord.gg/8bDf3BdbYd" target="_blank">
+          Forgot password?
+        </a>
       </Flex>
     </form>
   );

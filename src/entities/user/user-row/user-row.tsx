@@ -31,7 +31,7 @@ export const UserRow = ({ user, onClick }: IUserRowProps) => {
       <Table.Td>
         <Indicator
           zIndex={1}
-          position="middle-start"
+          position="top-start"
           size={12}
           color={ban ? "red" : online ? "green" : "gray"}
           withBorder

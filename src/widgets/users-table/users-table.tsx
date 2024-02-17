@@ -8,9 +8,11 @@ import { SearchInput } from "features/search-input";
 import { useUsersStore } from "../../store";
 import { credentialsModal, getLogFileDate, notification } from "shared/lib";
 import { usersApi } from "shared/api";
+import { ConfirmModal } from "shared/ui";
 
 import { IUserRow } from "shared/lib/types";
 import type { GetUsers } from "shared/api/users";
+import { accountCreatingText } from "shared/config";
 
 export const UsersTable = () => {
   const [activePage, setPage] = useState(1);
@@ -30,7 +32,7 @@ export const UsersTable = () => {
   const createUser = async () => {
     await usersApi.create().then((data) => {
       const { username, password } = data;
-      credentialsModal(username, password);
+      credentialsModal(username, password, accountCreatingText(username, password));
     });
 
     getUsers({ page: activePage });
@@ -156,8 +158,8 @@ export const UsersTable = () => {
             </Text>
           </Flex>
           <Flex gap="md" direction={isMobile ? "column-reverse" : "row"} mb={isMobile ? 20 : 0}>
-            <Button onClick={createUser}>+ Create New Account</Button>
-            <Button onClick={addFreeDay}>Add 1 Free Day</Button>
+            <ConfirmModal title="Create account" onConfirm={createUser} />
+            <ConfirmModal title="Add 1 free day" onConfirm={addFreeDay} />
             <a href={`/api/info/logs/${getLogFileDate()}`} target="_blank">
               <Button w="100%" variant="default">
                 Logs

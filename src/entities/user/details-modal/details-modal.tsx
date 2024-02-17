@@ -16,9 +16,9 @@ import { useEffect } from "react";
 
 import { usersApi } from "shared/api";
 import { SUBSCRIPTION, SubscriptionType } from "shared/config";
-import { credentialsModal, addSubscription } from "shared/lib";
+import { credentialsModal, addSubscription, notification } from "shared/lib";
 import { IUserRow } from "shared/lib/types";
-import { Form, ActionButton } from "shared/ui";
+import { Form, ActionButton, ConfirmModal } from "shared/ui";
 
 interface IUserDetailsModal {
   user: IUserRow;
@@ -56,24 +56,38 @@ export const UserDetailsModal = ({
       // styles={{ body: { paddingRight: 0 } }}
     >
       <Form onSave={() => updateUserData(userForm.values)}>
-        <Flex direction="column" gap="xs">
-          <Button
-            color="red"
+        <Flex direction="column" gap="xs" pb={1}>
+          <ConfirmModal
+            title="Delete account"
+            confirmColor="red"
+            confirmLabel="Delete"
             disabled={userForm.values.admin}
-            onClick={() => deleteUser(userForm.values.username)}
-          >
-            Delete account
-          </Button>
-          <Button
-            mt={15}
-            onClick={() =>
+            onConfirm={() => deleteUser(userForm.values.username)}
+          ></ConfirmModal>
+          <ConfirmModal
+            title="Reset password"
+            confirmLabel="Reset"
+            onConfirm={() =>
               usersApi
                 .resetPassword(userForm.values.username)
-                .then((data) => credentialsModal(userForm.values.username, data.password))
+                .then((data) =>
+                  credentialsModal(
+                    userForm.values.username,
+                    data.password,
+                    `Username: ${userForm.values.username}\nPassword: ${data.password}`
+                  )
+                )
             }
-          >
-            Reset password
-          </Button>
+          ></ConfirmModal>
+          <ConfirmModal
+            title="Disconnect"
+            confirmColor="cyan"
+            onConfirm={() =>
+              usersApi
+                .disconnect(userForm.values.username)
+                .then(() => notification({ message: "Event emitted!", type: "Success" }))
+            }
+          ></ConfirmModal>
           <TextInput
             label="Discord"
             size="md"
@@ -90,7 +104,6 @@ export const UserDetailsModal = ({
             <Flex direction="column" gap="xs">
               <TextInput label="Type" size="md" {...userForm.getInputProps("subscription_type")} />
               <TextInput
-                readOnly
                 label="Duration"
                 size="md"
                 rightSection={

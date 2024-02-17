@@ -1,10 +1,10 @@
-import { Modal, Flex, Button, TextInput, Select } from "@mantine/core";
+import { Modal, Flex, TextInput, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconBrandXbox } from "@tabler/icons-react";
 import { useEffect } from "react";
 
 import { IPlayerRow } from "shared/lib/types";
-import { Form, ActionButton } from "shared/ui";
+import { Form, ActionButton, ConfirmModal } from "shared/ui";
 
 interface IUserDetailsModal {
   player: IPlayerRow;
@@ -34,9 +34,12 @@ export const PlayerDetailsModal = ({
     <Modal opened={opened} onClose={close} title={`ID: ${playerForm.values.id}`} centered>
       <Form onSave={() => updatePlayer({ ...playerForm.values, type: +playerForm.values.type })}>
         <Flex w="100%" direction="column" gap="xs">
-          <Button color="red" onClick={() => deletePlayer(playerForm.values.id)}>
-            Delete
-          </Button>
+          <ConfirmModal
+            title="Delete player"
+            confirmColor="red"
+            confirmLabel="Delete"
+            onConfirm={() => deletePlayer(playerForm.values.id)}
+          ></ConfirmModal>
           <TextInput label="XUID" size="md" {...playerForm.getInputProps("xuid")} />
           <TextInput
             label="Gamertag"
