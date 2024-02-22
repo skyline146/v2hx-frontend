@@ -35,6 +35,7 @@ export interface IUserRow extends User {
   last_ip: string;
   discord_id: string;
   online: boolean;
+  private_access: boolean;
 }
 
 export interface IUsersTable {

@@ -221,6 +221,11 @@ export const UserDetailsModal = ({
           </Fieldset>
           <Fieldset legend="Restrictions" m={0} pl={10} pr={10}>
             <Flex direction="column" gap="xs">
+              <Checkbox
+                label="Dev build access"
+                size="md"
+                {...userForm.getInputProps("private_access", { type: "checkbox" })}
+              />
               <NumberInput label="Warns" size="md" {...userForm.getInputProps("warn")} />
               <Checkbox
                 label="Ban"
